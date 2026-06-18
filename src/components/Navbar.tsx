@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
+import ThemeCustomizer from './ThemeCustomizer';
 
 const navItems = [
   { name: 'Home', href: '#home' },
@@ -118,12 +119,16 @@ export default function Navbar() {
             ))}
           </ul>
           <div className="h-6 w-[1px] bg-card-border" />
-          <ThemeToggle />
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <ThemeCustomizer />
+          </div>
         </div>
 
         {/* Mobile menu trigger & ThemeToggle */}
-        <div className="flex items-center gap-4 md:hidden">
+        <div className="flex items-center gap-3 md:hidden">
           <ThemeToggle />
+          <ThemeCustomizer />
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="p-2 rounded-full hover:bg-card-bg border border-card-border cursor-pointer transition-colors"

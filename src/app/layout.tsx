@@ -79,6 +79,29 @@ export default function RootLayout({
                   } else {
                     document.documentElement.classList.remove('dark');
                   }
+
+                  const storedAccent = localStorage.getItem('accent-theme');
+                  if (storedAccent) {
+                    const accent = JSON.parse(storedAccent);
+                    document.documentElement.style.setProperty('--primary', accent.primary);
+                    document.documentElement.style.setProperty('--secondary', accent.secondary);
+                    document.documentElement.style.setProperty('--primary-rgb', accent.primaryRgb);
+                    document.documentElement.style.setProperty('--secondary-rgb', accent.secondaryRgb);
+                    
+                    const isDark = theme === 'dark';
+                    document.documentElement.style.setProperty(
+                      '--selection-bg',
+                      isDark ? 'rgba(' + accent.secondaryRgb + ', 0.3)' : 'rgba(' + accent.primaryRgb + ', 0.15)'
+                    );
+                    document.documentElement.style.setProperty(
+                      '--glow-1',
+                      isDark ? 'rgba(' + accent.primaryRgb + ', 0.15)' : 'rgba(' + accent.primaryRgb + ', 0.1)'
+                    );
+                    document.documentElement.style.setProperty(
+                      '--glow-2',
+                      isDark ? 'rgba(' + accent.secondaryRgb + ', 0.15)' : 'rgba(' + accent.secondaryRgb + ', 0.1)'
+                    );
+                  }
                 } catch (e) {
                   console.error('Theme injection error:', e);
                 }
