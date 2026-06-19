@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface Skill {
   name: string;
   level: number; // Percentage (e.g. 90)
@@ -10,7 +12,7 @@ export interface Project {
   description: string;
   tech: string[];
   features: string[];
-  image: string; // Will use nice SVG or gradient pattern since we don't have static images
+  image: StaticImageData; // Will use nice SVG or gradient pattern since we don't have static images
   liveUrl?: string;
   githubUrl?: string;
 }

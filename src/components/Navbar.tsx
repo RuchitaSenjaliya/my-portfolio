@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Code, Palette, Terminal, MessageSquareCode } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
@@ -27,7 +27,8 @@ export default function Navbar({
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const navItems = portfolioMode === 'code'
+  const navItems = useMemo(() =>{
+     return portfolioMode === 'code'
     ? [
         { name: 'Home', href: '#home' },
         { name: 'About', href: '#about' },
@@ -42,6 +43,7 @@ export default function Navbar({
         { name: 'Art Showcase', href: '#art' },
         { name: 'Contact', href: '#contact' },
       ];
+  }, [portfolioMode]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -108,7 +110,7 @@ export default function Navbar({
         <a 
           href="#home" 
           onClick={(e) => handleNavClick(e, '#home')}
-          className="flex items-center gap-2 text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent tracking-wider hover:opacity-95 transition-opacity"
+          className="flex items-center gap-2 text-2xl font-bold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent tracking-wider hover:opacity-95 transition-opacity"
         >
           RS
         </a>
@@ -140,7 +142,7 @@ export default function Navbar({
             ))}
           </ul>
           
-          <div className="h-6 w-[1px] bg-card-border" />
+          <div className="h-6 w-px bg-card-border" />
 
           {/* Mode Switcher */}
           <div className="flex items-center bg-card-bg/60 border border-card-border p-1 rounded-full text-xs shrink-0 select-none">
@@ -168,7 +170,7 @@ export default function Navbar({
             </button>
           </div>
 
-          <div className="h-6 w-[1px] bg-card-border" />
+          <div className="h-6 w-px bg-card-border" />
           
           {/* Controls */}
           <div className="flex items-center gap-3">
@@ -185,7 +187,7 @@ export default function Navbar({
               <Terminal className="w-5 h-5" />
             </button>
             
-            <button
+            {/* <button
               onClick={() => setIsAIAssistantOpen(!isAIAssistantOpen)}
               className={`flex items-center justify-center w-10 h-10 rounded-full cursor-pointer border transition-colors outline-none focus:ring-2 focus:ring-primary/50 ${
                 isAIAssistantOpen 
@@ -196,7 +198,7 @@ export default function Navbar({
               id="nav-ai-btn"
             >
               <MessageSquareCode className="w-5 h-5" />
-            </button>
+            </button> */}
 
             <ThemeToggle />
             <ThemeCustomizer />

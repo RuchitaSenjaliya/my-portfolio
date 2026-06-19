@@ -53,7 +53,7 @@ export default function Home() {
 
       {/* Main Single Page Sections */}
       <main className="flex-1">
-        <Hero />
+        <Hero portfolioMode={portfolioMode} />
 
         {/* Conditional Layouts based on active persona */}
         {portfolioMode === 'code' ? (

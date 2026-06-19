@@ -56,7 +56,7 @@ export default function Skills() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
   // Core categories
-  const categories = ['All', 'Frontend', 'Mobile', 'State Management', 'Backend Knowledge', 'Database', 'Tools'];
+  const categories = ['All', 'Frontend', 'Mobile', 'State Management', 'Database', 'Tools'];
 
   // Filter skills based on selected category
   const filteredSkills = selectedCategory === 'All'

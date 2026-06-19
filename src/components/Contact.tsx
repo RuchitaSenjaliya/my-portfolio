@@ -100,7 +100,7 @@ export default function Contact() {
       icon: Linkedin,
       label: "LinkedIn",
       value: "linkedin.com/in/ruchita-senjaliya",
-      href: "https://linkedin.com/in/ruchita-senjaliya",
+      href: "https://www.linkedin.com/in/ruchita-senjaliya-385453228",
     },
     {
       icon: Github,
