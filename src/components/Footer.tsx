@@ -99,7 +99,7 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="h-[1px] bg-card-border/60 w-full my-8" />
+        <div className="h-px bg-card-border/60 w-full my-8" />
 
         {/* Copyright */}
         <div className="flex flex-col sm:flex-row justify-between items-center text-xs text-foreground/45 gap-4">

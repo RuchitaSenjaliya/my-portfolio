@@ -1,47 +1,75 @@
 import { Project } from "../types/portfolio";
+import foodies_friend from '@/assets/images/project-img/foodies-friend.png'
+import coding_hub from '@/assets/images/project-img/coding-hub.png'
+import quick_connect from '@/assets/images/project-img/quick-connect.png'
+import code_blogs from '@/assets/images/project-img/coding-hub.png'
+import agrosmart from '@/assets/images/project-img/coding-hub.png'
 
 export const projects: Project[] = [
   {
     id: "proj-1",
-    title: "Employee Management System",
+    title: "Foodies Friend",
     description:
-      "A comprehensive web application designed for HR departments to streamline user management, onboarding workflows, track performance, and view company analytics from a single unified dashboard.",
-    tech: ["React", "Redux", "Material UI", "Node.js", "Express", "PostgreSQL"],
+      "A modern food discovery application that helps users explore recipes, search meals, and manage their favorite dishes through an intuitive user interface.",
+    tech: ["React", "JavaScript", "CSS", "REST API"],
     features: [
-      "User Management & Role Assignment",
-      "Secure JWT Authentication",
-      "Interactive Analytics Dashboard",
-      "Activity Tracking & Reporting",
+      "Recipe Search",
+      "Meal Categories",
+      "Favorite Recipes",
+      "Responsive Design",
     ],
-    image: "employee_mgmt",
-    liveUrl: "https://employee-mgmt.ruchita.dev",
-    githubUrl: "https://github.com/RuchitaSenjaliya/employee-management-system",
+    image: foodies_friend,
+    liveUrl: "https://foodies-friend.vercel.app/",
+    githubUrl: "https://github.com/RuchitaSenjaliya/Foodies-Friend",
   },
+
+  {
+    id: "proj-2",
+    title: "Coding Hub",
+    description:
+      "A developer-focused platform that provides coding resources, learning materials, and programming-related content in a centralized dashboard.",
+    tech: ["React", "JavaScript", "HTML", "CSS"],
+    features: [
+      "Coding Resources",
+      "Topic Categorization",
+      "Search Functionality",
+      "Responsive UI",
+    ],
+    image: coding_hub,
+    liveUrl: "https://coding-hub-steel.vercel.app/",
+    githubUrl: "https://github.com/RuchitaSenjaliya/Coding-Hub",
+  },
+
+  {
+    id: "proj-3",
+    title: "QuickConnect",
+    description:
+      "A real-time communication platform designed to simplify user interaction through instant messaging and seamless connectivity features.",
+    tech: ["React", "Node.js", "Socket.io", "JavaScript"],
+    features: [
+      "Real-time Messaging",
+      "User Authentication",
+      "Instant Notifications",
+      "Responsive Interface",
+    ],
+    image: quick_connect,
+    liveUrl: "https://quick-connect-blush.vercel.app",
+    githubUrl: "https://github.com/RuchitaSenjaliya/QuickConnect",
+  },
+
   // {
-  //   id: 'proj-2',
-  //   title: 'Hotel Management System',
-  //   description: 'A responsive hybrid web and mobile application built for hotels to manage bookings, track check-ins/check-outs, manage room statuses, and view financial summary reports.',
-  //   tech: ['Angular', 'Ionic', 'TypeScript', 'RxJS', 'Firebase'],
-  //   features: ['Room Allocation & Status Tracking', 'Interactive Booking Calendar', 'Real-time Push Notifications', 'Dynamic PDF Billing & Reports'],
-  //   image: 'hotel_mgmt',
-  //   liveUrl: 'https://hotel-booking.ruchita.dev',
-  //   githubUrl: 'https://github.com/ruchita-senjaliya/hotel-management-system'
-  // },
-  // {
-  //   id: "proj-3",
-  //   title: "Code Blogs",
+  //   id: "proj-4",
+  //   title: "Code Blogs AI",
   //   description:
-  //     "A modern blog platform built with Next.js that showcases programming tutorials, frontend development concepts, and technical articles with a clean and responsive user experience.",
-  //   tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
+  //     "An AI-powered blog generation platform that creates SEO-friendly technical articles from user-provided topics and prompts.",
+  //   tech: ["Next.js", "TypeScript", "OpenAI API", "Tailwind CSS"],
   //   features: [
-  //     "Responsive and mobile-friendly design",
-  //     "Dynamic blog post pages with optimized routing",
-  //     "Fast page loading using Next.js App Router",
-  //     "SEO-friendly structure for better search visibility",
-  //     "Clean and modern UI built with Tailwind CSS",
-  //     "Deployed on Vercel with continuous deployment",
+  //     "AI Blog Generation",
+  //     "SEO Optimized Content",
+  //     "Custom Prompts",
+  //     "Modern Responsive UI",
   //   ],
-  //   image: "code_blogs",
+  //   image: code_blogs,
   //   liveUrl: "https://code-blogs-dusky.vercel.app/",
   //   githubUrl: "https://github.com/RuchitaSenjaliya/code-blogs",
   // },
@@ -50,14 +78,14 @@ export const projects: Project[] = [
     title: "AgroSmart",
     description:
       "A robust mobile application built with React Native for farmers to list crops, coordinate order logistics directly with buyers, get weather alerts, and communicate via WhatsApp.",
-    tech: ["React Native", "Expo", "Firebase", "Redux Toolkit", "WhatsApp API"],
+    tech: ["React Native", "Expo", "Firebase", "Redux Toolkit", "React Query"],
     features: [
       "Agritech Product Listings & Inventory",
       "Direct Order Placement & Flow",
       "Push Notifications for Price Alerts",
       "One-Tap WhatsApp Buyer-Seller Chat",
     ],
-    image: "agrosmart",
+    image: agrosmart,
     liveUrl: "https://expo.dev/@ruchita/projects/agrosmart",
     githubUrl: "https://github.com/RuchitaSenjaliya/AgroSmart",
   },

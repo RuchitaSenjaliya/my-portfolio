@@ -159,7 +159,7 @@ export default function AIAssistant({ isOpen, setIsOpen }: AIAssistantProps) {
           animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
           exit={{ opacity: 0, scale: 0.85, y: 100, x: -100 }}
           transition={{ type: "spring", damping: 25, stiffness: 220 }}
-          className="fixed bottom-6 right-6 w-[90vw] sm:w-[400px] h-[500px] rounded-3xl bg-card-bg border border-card-border shadow-2xl z-50 overflow-hidden flex flex-col recruiter-modal"
+          className="fixed bottom-6 right-6 w-[90vw] sm:w-[400px] h-125 rounded-3xl bg-card-bg border border-card-border shadow-2xl z-50 overflow-hidden flex flex-col recruiter-modal"
         >
           {/* Chat Header */}
           <div className="p-4 bg-gradient-to-r from-primary to-secondary text-white flex items-center justify-between">

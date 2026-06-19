@@ -5,9 +5,11 @@ import { motion, useInView } from "framer-motion";
 import {
   Github,
   Code2,
+  Rss,
   GitCommit,
   FolderGit,
   Cpu,
+  Layers,
   Loader2,
 } from "lucide-react";
 
@@ -17,35 +19,44 @@ interface LanguageItem {
   color: string;
 }
 
+interface ContributionNode {
+  date: string;
+  count: number;
+  level: number;
+  isPadding?: boolean;
+}
+
 interface GithubStats {
   publicRepos: number;
   followers: number;
   totalCommits: number;
   languages: LanguageItem[];
+  contributions: ContributionNode[];
 }
 
 export default function DeveloperDashboard() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
-
+  const currentYear = new Date().getFullYear();
   const [stats, setStats] = useState<GithubStats>({
     publicRepos: 18,
     followers: 10,
-    totalCommits: 1424,
+    totalCommits: 257,
     languages: [
       { name: "TypeScript / JS", percentage: 70, color: "bg-yellow-400" },
       { name: "React / Next.js", percentage: 85, color: "bg-blue-500" },
       { name: "Angular / Ionic", percentage: 55, color: "bg-red-500" },
       { name: "HTML / CSS / Tailwind", percentage: 90, color: "bg-teal-400" },
     ],
+    contributions: [],
   });
   const [loading, setLoading] = useState(true);
+  const [selectedPeriod, setSelectedPeriod] = useState<string>(currentYear.toString());
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
         const res = await fetch("/api/github");
-
         if (res.ok) {
           const data = await res.json();
           setStats(data);
@@ -59,25 +70,22 @@ export default function DeveloperDashboard() {
     fetchStats();
   }, []);
 
-  // Generate GitHub commit contribution blocks (last 24 weeks)
-  const columns = 24;
-  const rows = 7;
-  const generateGrid = () => {
-    const blocks = [];
-    for (let c = 0; c < columns; c++) {
-      for (let r = 0; r < rows; r++) {
-        const rand = Math.random();
-        let level = "bg-card-border/50 dark:bg-card-border/20";
-        if (rand > 0.85) level = "bg-green-500/80";
-        else if (rand > 0.65) level = "bg-green-500/50";
-        else if (rand > 0.45) level = "bg-green-500/25";
-        blocks.push(level);
-      }
+  const getContributionColorClass = (level: number) => {
+    switch (level) {
+      case 0:
+        return "bg-card-border/55 dark:bg-card-border/20";
+      case 1:
+        return "bg-green-500/25";
+      case 2:
+        return "bg-green-500/50";
+      case 3:
+        return "bg-green-500/75";
+      case 4:
+        return "bg-green-500";
+      default:
+        return "bg-card-border/55 dark:bg-card-border/20";
     }
-    return blocks;
   };
-
-  const gridBlocks = generateGrid();
 
   const dashboardStats = [
     {
@@ -121,6 +129,146 @@ export default function DeveloperDashboard() {
     },
   ];
 
+  // Extract unique years from contributions
+  const availableYears = Array.from(
+    new Set(stats.contributions.map((c) => c.date.split("-")[0])),
+  )
+    .filter(Boolean)
+    .sort((a, b) => b.localeCompare(a));
+
+  // Determine current month or fallback to latest available month
+  const targetMonthStr = (() => {
+    const now = new Date();
+    const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    const hasCurrentMonth = stats.contributions.some((c) =>
+      c.date.startsWith(currentMonthStr),
+    );
+    if (hasCurrentMonth) return currentMonthStr;
+
+    if (stats.contributions.length > 0) {
+      const sorted = [...stats.contributions].sort((a, b) =>
+        b.date.localeCompare(a.date),
+      );
+      return sorted[0].date.substring(0, 7);
+    }
+    return currentMonthStr;
+  })();
+
+  // Filter contributions based on active selector
+  const rawFilteredContributions = (() => {
+    return stats.contributions.filter((c) =>
+      c.date.startsWith(`${selectedPeriod}-`),
+    );
+  })();
+
+  // Sort and pad contributions to align weekdays properly (Sunday starting)
+  const gridContributions = (() => {
+    if (rawFilteredContributions.length === 0) return [];
+
+    const sorted = [...rawFilteredContributions].sort((a, b) =>
+      a.date.localeCompare(b.date),
+    );
+
+    const firstDate = new Date(sorted[0].date);
+    const firstDayOfWeek = firstDate.getDay(); // 0 is Sunday, 6 is Saturday
+
+    // Create padding blocks for the start of the week
+    const paddingStart = Array.from({ length: firstDayOfWeek }, () => ({
+      date: "",
+      count: 0,
+      level: 0,
+      isPadding: true,
+    }));
+
+    const combined = [...paddingStart, ...sorted];
+
+    // Complete the last column to make it a perfect multiple of 7
+    const paddingEndLength = (7 - (combined.length % 7)) % 7;
+    const paddingEnd = Array.from({ length: paddingEndLength }, () => ({
+      date: "",
+      count: 0,
+      level: 0,
+      isPadding: true,
+    }));
+
+    return [...combined, ...paddingEnd];
+  })();
+
+  // Generate month labels for each week column
+  const monthLabels = (() => {
+    const cols = Math.ceil(gridContributions.length / 7);
+    const labels: string[] = [];
+    let prevMonth = "";
+
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    for (let w = 0; w < cols; w++) {
+      let weekMonth = "";
+      for (let d = 0; d < 7; d++) {
+        const block = gridContributions[w * 7 + d];
+        if (block && block.date) {
+          const monthPart = block.date.split("-")[1];
+          if (monthPart) {
+            const monthIdx = parseInt(monthPart, 10) - 1;
+            weekMonth = monthNames[monthIdx];
+            break;
+          }
+        }
+      }
+
+      if (weekMonth && (w === 0 || weekMonth !== prevMonth)) {
+        labels.push(weekMonth);
+        prevMonth = weekMonth;
+      } else {
+        labels.push("");
+      }
+    }
+    return labels;
+  })();
+
+  // Group cells into weeks (columns of 7 days)
+  const weeks = (() => {
+    const list: ContributionNode[][] = [];
+    for (let i = 0; i < gridContributions.length; i += 7) {
+      list.push(gridContributions.slice(i, i + 7));
+    }
+    return list;
+  })();
+
+  const formatMonthYear = (monthStr: string) => {
+    if (!monthStr) return "";
+    const [year, month] = monthStr.split("-");
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const monthIdx = parseInt(month, 10) - 1;
+    return `${monthNames[monthIdx]} ${year}`;
+  };
+
   return (
     <section
       id="dashboard"
@@ -128,8 +276,8 @@ export default function DeveloperDashboard() {
       className="py-24 bg-card-bg/25 border-y border-card-border relative overflow-hidden"
     >
       {/* Decorative Blur Gradients */}
-      <div className="absolute top-1/4 right-0 w-75 h-75 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 left-0 w-75 h-75 bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 right-0 w-[300px] h-[300px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 left-0 w-[300px] h-[300px] bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
@@ -198,26 +346,101 @@ export default function DeveloperDashboard() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="p-6 rounded-3xl bg-card-bg border border-card-border overflow-hidden"
               >
-                <div className="flex items-center justify-between mb-4 border-b border-card-border pb-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5 border-b border-card-border pb-4">
                   <div className="flex items-center gap-2">
                     <Github className="w-4 h-4 text-foreground/80" />
                     <span className="text-xs font-bold text-foreground/85">
-                      GitHub Contributions Grid
+                      {`Contributions: ${selectedPeriod}`}
                     </span>
                   </div>
-                  <span className="text-[10px] text-green-500 font-bold bg-green-500/10 px-2 py-0.5 rounded-full border border-green-500/25">
-                    Active on GitHub
-                  </span>
+
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {availableYears.map((year) => (
+                      <button
+                        key={year}
+                        onClick={() => setSelectedPeriod(year)}
+                        className={`px-2.5 py-1 text-[10px] uppercase font-bold tracking-wider rounded-lg border transition-all duration-200 cursor-pointer ${
+                          selectedPeriod === year
+                            ? "bg-primary/10 text-primary border-primary/20 shadow-xs"
+                            : "bg-card-bg border-card-border text-foreground/60 hover:text-foreground/80 hover:border-card-border/80"
+                        }`}
+                      >
+                        {year}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="overflow-x-auto">
-                  <div className="grid grid-rows-7 grid-flow-col gap-1 w-max mx-auto py-1">
-                    {gridBlocks.map((bgClass, idx) => (
-                      <div
-                        key={idx}
-                        className={`w-3.5 h-3.5 rounded-sm transition-colors duration-500 ${bgClass}`}
-                      />
-                    ))}
+                <div className="overflow-x-auto w-full">
+                  <div className="flex gap-1.5 items-start w-max mx-auto py-1">
+                    {/* Weekday labels column */}
+                    <div className="flex flex-col">
+                      {/* Spacer for month row */}
+                      <div className="h-3 mb-1" />
+                      {/* Weekday cells */}
+                      <div className="w-[28px] shrink-0 grid grid-rows-7 gap-1 text-[9px] text-foreground/40 font-semibold select-none text-right pr-1.5">
+                        <div className="h-3.5 flex items-center justify-end"></div>
+                        <div className="h-3.5 flex items-center justify-end">
+                          Mon
+                        </div>
+                        <div className="h-3.5 flex items-center justify-end"></div>
+                        <div className="h-3.5 flex items-center justify-end">
+                          Wed
+                        </div>
+                        <div className="h-3.5 flex items-center justify-end"></div>
+                        <div className="h-3.5 flex items-center justify-end">
+                          Fri
+                        </div>
+                        <div className="h-3.5 flex items-center justify-end"></div>
+                      </div>
+                    </div>
+
+                    {/* Weeks Row Container */}
+                    <div className="flex gap-1">
+                      {weeks.map((week, weekIdx) => {
+                        const label = monthLabels[weekIdx];
+                        const isNewMonth = label !== "";
+                        const weekMargin =
+                          weekIdx > 0 && isNewMonth ? "ml-3.5" : "";
+
+                        return (
+                          <div
+                            key={weekIdx}
+                            className={`flex flex-col ${weekMargin}`}
+                          >
+                            {/* Month label */}
+                            <div className="h-3 mb-1 text-[9px] text-foreground/45 font-bold overflow-visible whitespace-nowrap select-none w-3.5 flex items-center justify-start">
+                              {label}
+                            </div>
+
+                            {/* Cells in Week */}
+                            <div className="grid grid-rows-7 gap-1">
+                              {week.map((block, dayIdx) => {
+                                if (block.isPadding) {
+                                  return (
+                                    <div
+                                      key={dayIdx}
+                                      className="w-3.5 h-3.5 bg-transparent opacity-0 pointer-events-none cursor-default"
+                                    />
+                                  );
+                                }
+                                return (
+                                  <div
+                                    key={dayIdx}
+                                    className={`w-3.5 h-3.5 rounded-sm transition-colors duration-350 cursor-pointer ${getContributionColorClass(block.level)}`}
+                                    title={
+                                      block.date
+                                        ? `${block.date}: ${block.count} commits`
+                                        : "No contributions recorded"
+                                    }
+                                  />
+                                );
+                              })}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
 

@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { projects } from '../data/projects';
 import { ExternalLink, Github, Sparkles, LayoutDashboard, CalendarRange, BrainCircuit, Leaf, ChevronDown, ChevronUp, Network } from 'lucide-react';
+import Image from 'next/image';
 
 // Render custom interactive SVG dashboards instead of plain placeholders
 function ProjectMockImage({ type }: { type: string }) {
@@ -198,8 +199,8 @@ export default function Projects() {
   return (
     <section id="projects" ref={containerRef} className="py-24 bg-card-bg/25 border-y border-card-border relative overflow-hidden">
       {/* Decorative Blur Backgrounds */}
-      <div className="absolute top-1/4 right-0 w-[350px] h-[350px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 left-0 w-[350px] h-[350px] bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 right-0 w-[350px] h-87.5 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 left-0 w-[350px] h-87.5 bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
@@ -235,7 +236,7 @@ export default function Projects() {
               <div>
                 {/* Project Header (SVG Mock Graphic instead of generic image placeholder) */}
                 <div className="relative h-56 w-full border-b border-card-border overflow-hidden bg-slate-950">
-                  <ProjectMockImage type={project.image} />
+                  <Image src={project.image} alt={project.title} layout="fill" objectFit="contain" />
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 z-20">
                     {project.liveUrl && (
@@ -285,35 +286,6 @@ export default function Projects() {
                         </li>
                       ))}
                     </ul>
-                  </div>
-
-                  {/* Expandable Project Architecture Showcase Button */}
-                  <div className="mt-5">
-                    <button
-                      onClick={() => toggleArchitecture(project.id)}
-                      className="flex items-center justify-between w-full px-4 py-2.5 rounded-xl border border-card-border hover:border-primary/45 bg-background text-xs font-semibold text-foreground/85 transition-colors cursor-pointer outline-none"
-                    >
-                      <span className="flex items-center gap-2">
-                        <Network className="w-4 h-4 text-primary animate-none" />
-                        Project Architecture Showcase
-                      </span>
-                      {expandedArchId === project.id ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                    </button>
-                    
-                    {/* Collapsible content */}
-                    <AnimatePresence>
-                      {expandedArchId === project.id && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden"
-                        >
-                          <ProjectArchitecture type={project.image} />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </div>
                 </div>
               </div>

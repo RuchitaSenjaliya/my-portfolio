@@ -10,6 +10,13 @@ export const certifications: Certification[] = [
   },
   {
     id: 'cert-2',
+    title: 'Claude code Certification',
+    issuer: 'Anthropic',
+    date: '2026',
+    credentialUrl: 'https://verify.skilljar.com/c/aw56yyz68cp7'
+  },
+  {
+    id: 'cert-2',
     title: 'React Professional Certification',
     issuer: 'Meta / Coursera',
     date: '2024',
