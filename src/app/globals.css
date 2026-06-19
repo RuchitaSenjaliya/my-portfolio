@@ -88,8 +88,22 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.recruiter-modal{
+  background: #ffffff;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
 .dark .glass {
-  background: rgba(15, 23, 42, 0.5);
+  background: #0f172a80;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dark .recruiter-modal{
+  background: #0f172a;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 

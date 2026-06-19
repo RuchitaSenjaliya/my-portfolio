@@ -1,13 +1,86 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { experience } from '../data/experience';
-import { Calendar, Briefcase, ChevronRight } from 'lucide-react';
+import { ForwardRefExoticComponent, RefAttributes, useRef } from 'react';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { Calendar, Briefcase, ChevronRight, Layers, Code2, Smartphone, Cpu, LucideProps } from 'lucide-react';
+
+interface Milestone {
+  year: string;
+  role: string;
+  company: string;
+  icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>;
+  milestones: string[];
+  tech: string[];
+}
+
+const timelineData: Milestone[] = [
+  {
+    year: '2023',
+    role: 'Frontend Developer',
+    company: 'Solute Labs Pvt. Ltd.',
+    icon: Code2,
+    milestones: [
+      'Developed scalable React.js web architectures with Redux state machines.',
+      'Designed and coded modular responsive admin dashboards with Material UI.',
+      'Collaborated closely with Figma designers to code pixel-perfect interfaces.'
+    ],
+    tech: ['HTML', 'CSS', 'JavaScript', 'React.js', 'GitHub'],
+  },
+  {
+    year: '2024',
+    role: 'Enterprise Web & Angular Systems',
+    company: 'Tech Solutions Inc.',
+    icon: Layers,
+    milestones: [
+      'Built and integrated responsive interfaces with Angular and RxJS state engines.',
+      'Constructed enterprise-grade hybrid mobile layouts using Ionic and Cordova.',
+      'Restructured modular components, decreasing overall code bundle sizes by 20%.'
+    ],
+    tech: ['Angular', 'Ionic', 'TypeScript', 'RxJS', 'JSON Rest APIs'],
+    visualMock: 'angular_enterprise'
+  },
+  {
+    year: '2025',
+    role: 'Mobile Architecture Specialist',
+    company: 'Tech Solutions Inc.',
+    icon: Smartphone,
+    milestones: [
+      'Created cross-platform native iOS/Android mobile apps with React Native.',
+      'Configured secure local caching and push alert sync pipelines with Expo/Firebase.',
+      'Integrated direct buyer-seller WhatsApp dispatch systems.'
+    ],
+    tech: ['React Native', 'Expo', 'Redux Toolkit', 'Firebase API', 'React Query'],
+    visualMock: 'mobile_react_native'
+  },
+  {
+    year: '2026',
+    role: 'AI & Next.js 15 System Design',
+    company: 'Tech Solutions Inc. / Freelance',
+    icon: Cpu,
+    milestones: [
+      'Designed and built AI content generators utilising Next.js and OpenAI API.',
+      'Engineered search-engine-indexing pipelines (Robots/Sitemaps) for next-gen sites.',
+      'Deployed edge-ready SSR applications to Vercel clouds.'
+    ],
+    tech: ['Next.js 15', 'OpenAI API', 'Tailwind CSS v4', 'Edge Server Actions'],
+    visualMock: 'next_ai_system'
+  }
+];
 
 export default function Experience() {
-  const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: true, margin: '-20% 0px' });
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Track scroll inside container to animate indicator bar
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end end']
+  });
+
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   return (
     <section id="experience" ref={containerRef} className="py-24 bg-background relative overflow-hidden">
@@ -20,68 +93,90 @@ export default function Experience() {
         <div className="text-center max-w-3xl mx-auto mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             className="text-3xl sm:text-4xl font-bold tracking-tight mb-4"
           >
-            Work Experience
+            My Career Story
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-foreground/70 text-lg leading-relaxed"
           >
-            My professional timeline as a developer, highlighting major responsibilities, frameworks utilized, and engineering practices delivered in production environments.
+            A scroll-driven journey detailing how my technical role, architectural thinking, and code stack matured year-by-year.
           </motion.p>
         </div>
 
-        {/* Timeline Layout */}
+        {/* Timeline container */}
         <div className="relative max-w-4xl mx-auto">
-          {/* Vertical Center Line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-card-border transform -translate-x-1/2" />
+          {/* Scroll-driven Vertical Indicator Line */}
+          <motion.div 
+            style={{ scaleY }}
+            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[3px] bg-gradient-to-b from-primary to-secondary origin-top transform -translate-x-1/2" 
+          />
+          {/* Static gray line beneath */}
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[1px] bg-card-border transform -translate-x-1/2" />
 
           {/* Timeline Nodes */}
-          <div className="space-y-12">
-            {experience.map((item, idx) => {
+          <div className="space-y-16">
+            {timelineData.map((item, idx) => {
               const isEven = idx % 2 === 0;
+              const IconComponent = item.icon;
+
               return (
-                <div key={item.id} className="relative flex flex-col md:flex-row md:items-start">
+                <div key={item.year} className="relative flex flex-col md:flex-row md:items-start">
                   
                   {/* Timeline bullet indicator */}
-                  <div className="absolute left-4 md:left-1/2 w-8 h-8 rounded-full border-4 border-background bg-gradient-to-r from-primary to-secondary transform -translate-x-1/2 z-10 flex items-center justify-center text-white shadow-md">
-                    <Briefcase className="w-3.5 h-3.5" />
-                  </div>
+                  <motion.div 
+                    whileInView={{ scale: [0.5, 1.2, 1] }}
+                    viewport={{ once: true, margin: '-100px' }}
+                    className="absolute left-4 md:left-1/2 w-9 h-9 rounded-full border-4 border-background bg-gradient-to-r from-primary to-secondary transform -translate-x-1/2 z-10 flex items-center justify-center text-white shadow-lg"
+                  >
+                    <span className="text-[10px] font-bold">{item.year}</span>
+                  </motion.div>
 
-                  {/* Left Column (Alternating Cards or Details) */}
+                  {/* Left Column (Content cards) */}
                   <div className={`w-full md:w-1/2 pl-12 md:pl-0 md:pr-12 md:text-right ${isEven ? 'md:order-1' : 'md:order-3'}`}>
                     <motion.div
-                      initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-                      animate={isInView ? { opacity: 1, x: 0 } : {}}
-                      transition={{ duration: 0.7, ease: 'easeOut', delay: idx * 0.2 }}
-                      className="p-6 rounded-2xl bg-card-bg border border-card-border hover:border-primary/20 hover:shadow-lg transition-all duration-300 relative"
+                      initial={{ opacity: 0, x: isEven ? -40 : 40 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: '-100px' }}
+                      transition={{ duration: 0.6, ease: 'easeOut' }}
+                      className="p-6 rounded-3xl bg-card-bg border border-card-border hover:border-primary/30 hover:shadow-xl transition-all duration-300 relative"
                     >
                       {/* Date Badge */}
-                      <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-primary/10 text-primary mb-4 ${isEven ? 'md:flex-row-reverse md:float-left' : 'md:float-right'}`}>
-                        <Calendar className="w-3.5 h-3.5" />
-                        <span>{item.duration}</span>
+                      <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-primary/10 text-primary mb-4 ${isEven ? 'md:flex-row-reverse' : ''}`}>
+                        <IconComponent className="w-3.5 h-3.5" />
+                        <span>{item.year} Milestone</span>
                       </div>
-                      <div className="clear-both" />
 
-                      <h3 className="text-xl font-bold text-foreground/90 mt-2">{item.role}</h3>
-                      <h4 className="text-base font-semibold text-primary/90 mt-1">{item.company}</h4>
+                      <h3 className="text-lg font-bold text-foreground/90 mt-2">{item.role}</h3>
+                      <h4 className="text-sm font-semibold text-primary mt-1">{item.company}</h4>
 
-                      {/* Responsibilities list */}
-                      <ul className={`mt-6 space-y-3 text-sm text-foreground/75 ${isEven ? 'md:text-right' : 'md:text-left'}`}>
-                        {item.responsibilities.map((resp, respIdx) => (
-                          <li key={respIdx} className={`flex items-start gap-2.5 ${isEven ? 'md:flex-row-reverse' : ''}`}>
-                            <span className="p-0.5 rounded-full bg-primary/15 text-primary mt-1 shrink-0">
-                              <ChevronRight className="w-3.5 h-3.5" />
+                      {/* Milestones list */}
+                      <ul className={`mt-5 space-y-3.5 text-xs text-foreground/75 ${isEven ? 'md:text-right' : 'md:text-left'}`}>
+                        {item.milestones.map((mil, milIdx) => (
+                          <li key={milIdx} className={`flex items-start gap-2.5 ${isEven ? 'md:flex-row-reverse' : ''}`}>
+                            <span className="p-0.5 rounded-full bg-primary/15 text-primary mt-0.5 shrink-0">
+                              <ChevronRight className="w-3 h-3" />
                             </span>
-                            <span>{resp}</span>
+                            <span>{mil}</span>
                           </li>
                         ))}
                       </ul>
+
+                      {/* Technical Capsules */}
+                      <div className={`flex flex-wrap gap-1.5 mt-6 ${isEven ? 'md:justify-end' : 'justify-start'}`}>
+                        {item.tech.map((t) => (
+                          <span key={t} className="text-[9px] font-bold bg-card-border/60 dark:bg-card-border/30 border border-card-border/80 px-2 py-0.5 rounded-md text-foreground/80">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
                     </motion.div>
                   </div>
 
