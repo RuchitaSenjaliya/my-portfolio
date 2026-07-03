@@ -5,11 +5,9 @@ import { motion, useInView } from "framer-motion";
 import {
   Github,
   Code2,
-  Rss,
   GitCommit,
   FolderGit,
   Cpu,
-  Layers,
   Loader2,
 } from "lucide-react";
 
@@ -108,27 +106,6 @@ export default function DeveloperDashboard() {
     },
   ];
 
-  const blogs = [
-    {
-      title: "Mastering Concurrent Features in React 19 & Next.js 15",
-      date: "June 2026",
-      readTime: "6 min read",
-      url: "#",
-    },
-    {
-      title: "Writing Modular Custom Hooks for React Native Applications",
-      date: "April 2026",
-      readTime: "8 min read",
-      url: "#",
-    },
-    {
-      title: "A Deep Dive into Ionic Hybrid vs Native Build Performance",
-      date: "March 2026",
-      readTime: "5 min read",
-      url: "#",
-    },
-  ];
-
   // Extract unique years from contributions
   const availableYears = Array.from(
     new Set(stats.contributions.map((c) => c.date.split("-")[0])),
@@ -137,23 +114,6 @@ export default function DeveloperDashboard() {
     .sort((a, b) => b.localeCompare(a));
 
   // Determine current month or fallback to latest available month
-  const targetMonthStr = (() => {
-    const now = new Date();
-    const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-    const hasCurrentMonth = stats.contributions.some((c) =>
-      c.date.startsWith(currentMonthStr),
-    );
-    if (hasCurrentMonth) return currentMonthStr;
-
-    if (stats.contributions.length > 0) {
-      const sorted = [...stats.contributions].sort((a, b) =>
-        b.date.localeCompare(a.date),
-      );
-      return sorted[0].date.substring(0, 7);
-    }
-    return currentMonthStr;
-  })();
-
   // Filter contributions based on active selector
   const rawFilteredContributions = (() => {
     return stats.contributions.filter((c) =>
@@ -247,27 +207,6 @@ export default function DeveloperDashboard() {
     }
     return list;
   })();
-
-  const formatMonthYear = (monthStr: string) => {
-    if (!monthStr) return "";
-    const [year, month] = monthStr.split("-");
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    const monthIdx = parseInt(month, 10) - 1;
-    return `${monthNames[monthIdx]} ${year}`;
-  };
 
   return (
     <section

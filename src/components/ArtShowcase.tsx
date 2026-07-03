@@ -1,72 +1,89 @@
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { Sparkles, Palette } from 'lucide-react';
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { Sparkles, Palette } from "lucide-react";
+import Image from "next/image";
 
 export default function ArtShowcase() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-10% 0px' });
+  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
 
   const artworks = [
     {
-      id: 'art-1',
-      title: 'Mandala Meditation No. 12',
-      type: 'Mandala Art',
-      medium: 'Ink on Textured Paper',
-      description: 'A precise, radially symmetrical geometric mandala, focusing on alignment and structural details. Radial symmetry reinforces visual balance.',
-      image: 'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?q=80&w=600&auto=format&fit=crop',
-      heightClass: 'h-[360px] md:h-[400px]', // Tall card
+      id: "art-1",
+      title: "Mandala Meditation No. 12",
+      type: "Mandala Art",
+      medium: "Ink on Textured Paper",
+      description:
+        "A precise, radially symmetrical geometric mandala, focusing on alignment and structural details. Radial symmetry reinforces visual balance.",
+      image:
+        "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?q=80&w=600&auto=format&fit=crop",
+      heightClass: "h-[360px] md:h-[400px]", // Tall card
     },
     {
-      id: 'art-2',
-      title: 'Golden Sunset Wave',
-      type: 'Canvas Painting',
-      medium: 'Acrylic on Canvas',
-      description: 'A study of warm colors, sunset gradients, and fluid waves. Explores light contrast values.',
-      image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=600&auto=format&fit=crop',
-      heightClass: 'h-[220px] md:h-[260px]', // Short card
+      id: "art-2",
+      title: "Golden Sunset Wave",
+      type: "Canvas Painting",
+      medium: "Acrylic on Canvas",
+      description:
+        "A study of warm colors, sunset gradients, and fluid waves. Explores light contrast values.",
+      image:
+        "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=600&auto=format&fit=crop",
+      heightClass: "h-[220px] md:h-[260px]", // Short card
     },
     {
-      id: 'art-3',
-      title: 'Ocean Serenity at Night',
-      type: 'Canvas Painting',
-      medium: 'Acrylic on Canvas',
-      description: 'Deep blues and layered visual currents. Highlights glassmorphism textures and depth.',
-      image: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=600&auto=format&fit=crop',
-      heightClass: 'h-[280px] md:h-[320px]', // Medium card
+      id: "art-3",
+      title: "Ocean Serenity at Night",
+      type: "Canvas Painting",
+      medium: "Acrylic on Canvas",
+      description:
+        "Deep blues and layered visual currents. Highlights glassmorphism textures and depth.",
+      image:
+        "https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=600&auto=format&fit=crop",
+      heightClass: "h-[280px] md:h-[320px]", // Medium card
     },
     {
-      id: 'art-4',
-      title: 'Cosmic Geometric Alignment',
-      type: 'Abstract Art',
-      medium: 'Mixed Media on Wood Panel',
-      description: 'Intersecting axes, concentric spheres, and triangles. Focuses on spatial layout coordinates.',
-      image: 'https://images.unsplash.com/photo-1507908708418-77143f545171?q=80&w=600&auto=format&fit=crop',
-      heightClass: 'h-[380px] md:h-[440px]', // Very Tall card
+      id: "art-4",
+      title: "Cosmic Geometric Alignment",
+      type: "Abstract Art",
+      medium: "Mixed Media on Wood Panel",
+      description:
+        "Intersecting axes, concentric spheres, and triangles. Focuses on spatial layout coordinates.",
+      image:
+        "https://images.unsplash.com/photo-1507908708418-77143f545171?q=80&w=600&auto=format&fit=crop",
+      heightClass: "h-[380px] md:h-[440px]", // Very Tall card
     },
     {
-      id: 'art-5',
-      title: 'Sacred Flower of Life',
-      type: 'Mandala Art',
-      medium: 'Gold Foil on Indigo Canvas',
-      description: 'A geometric pattern formed by overlapping circles. Visualizes complex mathematical proportion nodes.',
-      image: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=600&auto=format&fit=crop',
-      heightClass: 'h-[240px] md:h-[280px]', // Short card
+      id: "art-5",
+      title: "Sacred Flower of Life",
+      type: "Mandala Art",
+      medium: "Gold Foil on Indigo Canvas",
+      description:
+        "A geometric pattern formed by overlapping circles. Visualizes complex mathematical proportion nodes.",
+      image:
+        "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=600&auto=format&fit=crop",
+      heightClass: "h-[240px] md:h-[280px]", // Short card
     },
     {
-      id: 'art-6',
-      title: 'Nebula Harmony',
-      type: 'Canvas Painting',
-      medium: 'Alcohol Ink on Paper',
-      description: 'Flowing violet, magenta, and gold ink clouds. Integrates abstract color blending.',
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=600&auto=format&fit=crop',
-      heightClass: 'h-[320px] md:h-[380px]', // Medium-Tall card
+      id: "art-6",
+      title: "Nebula Harmony",
+      type: "Canvas Painting",
+      medium: "Alcohol Ink on Paper",
+      description:
+        "Flowing violet, magenta, and gold ink clouds. Integrates abstract color blending.",
+      image:
+        "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=600&auto=format&fit=crop",
+      heightClass: "h-[320px] md:h-[380px]", // Medium-Tall card
     },
   ];
 
   return (
-    <section id="art" ref={ref} className="py-24 bg-background relative overflow-hidden">
+    <section
+      id="art"
+      ref={ref}
+      className="py-24 bg-background relative overflow-hidden"
+    >
       {/* Decorative backdrop gradients */}
       <div className="absolute right-0 top-1/4 w-[300px] h-[300px] bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute left-0 bottom-1/4 w-[300px] h-[300px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
@@ -80,9 +97,11 @@ export default function ArtShowcase() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 text-secondary border border-secondary/20 mb-4"
           >
             <Palette className="w-4 h-4 animate-bounce" />
-            <span className="text-xs font-bold uppercase tracking-wider">Canvas & Mandala Art Showcase</span>
+            <span className="text-xs font-bold uppercase tracking-wider">
+              Canvas & Mandala Art Showcase
+            </span>
           </motion.div>
-          
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -97,7 +116,8 @@ export default function ArtShowcase() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-foreground/70 text-sm sm:text-base leading-relaxed"
           >
-            Geometric mandalas and fluid canvas designs. Hover over any frame in the masonry gallery to reveal details.
+            Geometric mandalas and fluid canvas designs. Hover over any frame in
+            the masonry gallery to reveal details.
           </motion.p>
         </div>
 
@@ -111,12 +131,13 @@ export default function ArtShowcase() {
               transition={{ duration: 0.6, delay: idx * 0.1 }}
               className={`break-inside-avoid w-full group relative rounded-3xl border border-card-border overflow-hidden bg-slate-900 flex items-center justify-center hover:border-secondary/40 hover:shadow-2xl transition-all duration-300 ${art.heightClass}`}
             >
-              {/* Image Element instead of programmatic SVG (fills the container entirely) */}
-              <img
+              <Image
                 src={art.image}
                 alt={art.title}
-                loading="lazy"
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                unoptimized
               />
 
               {/* Shadow Frame Overlay (Physical Canvas Frame Feeling) */}
@@ -124,7 +145,6 @@ export default function ArtShowcase() {
 
               {/* Hover-reveal Glassmorphic Info Card (fades/slides up) */}
               <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-between p-6 text-white rounded-3xl">
-                
                 {/* Header info */}
                 <div>
                   <span className="text-[8px] bg-secondary border border-secondary/35 text-white px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
@@ -148,7 +168,6 @@ export default function ArtShowcase() {
                     <Sparkles className="w-3.5 h-3.5" /> Creative
                   </span>
                 </div>
-
               </div>
             </motion.div>
           ))}

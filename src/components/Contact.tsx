@@ -84,7 +84,7 @@ export default function Contact() {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       setStatus("success");
       setForm({ name: "", email: "", subject: "", message: "" });
-    } catch (err) {
+    } catch {
       setStatus("error");
     }
   };

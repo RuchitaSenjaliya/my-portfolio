@@ -7,7 +7,7 @@ interface GithubContributionNode {
 }
 
 export async function GET() {
-  const username = process.env.GITHUB_USERNAME || "RuchitaSenjaliya";
+  const username = process.env.GITHUB_USERNAME;
   const token = process.env.GITHUB_PAT;
 
   const headers: HeadersInit = {

@@ -1,15 +1,11 @@
 "use client";
 
 import { ForwardRefExoticComponent, RefAttributes, useRef } from "react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import {
-  Calendar,
-  Briefcase,
   ChevronRight,
   Layers,
   Code2,
-  Smartphone,
-  Cpu,
   LucideProps,
 } from "lucide-react";
 
