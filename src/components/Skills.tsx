@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 
 // Map specific skills to corresponding Lucide icons for maximum visual variety
-const skillIcons: Record<string, any> = {
+const skillIcons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
   'React.js': AtomIcon, // Fallback to React style or Code
   'Next.js': AtomIcon,
   'Angular': Shield,
@@ -39,7 +39,7 @@ const skillIcons: Record<string, any> = {
 };
 
 // Simple React Icon fallback
-function AtomIcon(props: any) {
+function AtomIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
       <circle cx="12" cy="12" r="3" />

@@ -85,7 +85,7 @@ export default function TerminalMode({ isOpen, setIsOpen }: TerminalModeProps) {
         output = (
           <div className="space-y-1.5">
             <p className="text-primary font-bold">Ruchita Senjaliya - Frontend Developer</p>
-            <p className="text-white/80">"Passionate frontend developer with experience building scalable web and mobile applications using React, React Native, Angular, Ionic, Next.js, and TypeScript."</p>
+            <p className="text-white/80">&quot;Passionate frontend developer with experience building scalable web and mobile applications using React, React Native, Angular, Ionic, Next.js, and TypeScript.&quot;</p>
             <p className="text-white/60">Duration: 2+ Years Professional Experience</p>
           </div>
         );

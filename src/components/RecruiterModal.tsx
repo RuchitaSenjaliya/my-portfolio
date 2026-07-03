@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Briefcase, Download, Mail, Phone, Calendar, MapPin, Copy, Check, X, ShieldAlert, Sparkles } from 'lucide-react';
+import { Briefcase, Download, Mail, Calendar, MapPin, Copy, Check, X, Sparkles } from 'lucide-react';
+import { downloadFileFromUrl } from '@/utils/helper';
 
 export default function RecruiterModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,25 +16,7 @@ export default function RecruiterModal() {
   };
 
   const handleDownloadCV = () => {
-    const cvContent = `
-    RUCHITA SENJALIYA
-    Frontend Developer
-    Email: ruchita.senjaliya.dev@gmail.com
-    Website: https://ruchita.dev
-    GitHub: https://github.com/ruchita-senjaliya
-
-    SUMMARY:
-    Passionate frontend developer with experience building scalable web and mobile applications using React, React Native, Angular, Ionic, Next.js, and TypeScript.
-    `;
-    const blob = new Blob([cvContent], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'Ruchita_Senjaliya_Resume.txt';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    downloadFileFromUrl('/Ruchi-Resume.pdf', 'Ruchi-Resume.pdf');
   };
 
   return (

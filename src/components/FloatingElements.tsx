@@ -3,6 +3,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
+  type LucideIcon,
   Laptop,
   Code,
   Cpu,
@@ -23,7 +24,7 @@ import {
 } from "lucide-react";
 
 interface FloatingItem {
-  Icon: React.ComponentType<any>;
+  Icon: LucideIcon;
   top: string;
   left?: string;
   right?: string;
@@ -58,7 +59,7 @@ const codeItems: FloatingItem[] = [
   {
     Icon: Cpu,
     top: "42%",
-    left: "6%",
+    left: "0%",
     size: 32,
     delay: 1,
     duration: 22,
@@ -88,7 +89,7 @@ const codeItems: FloatingItem[] = [
   {
     Icon: Binary,
     top: "32%",
-    right: "8%",
+    right: "4%",
     size: 28,
     delay: 0.5,
     duration: 20,
@@ -97,8 +98,8 @@ const codeItems: FloatingItem[] = [
   },
   {
     Icon: GitBranch,
-    top: "50%",
-    left: "8%",
+    top: "90%",
+    left: "38%",
     size: 36,
     delay: 1.5,
     duration: 26,
@@ -265,6 +266,7 @@ export default function FloatingElements({
                   delay: item.delay,
                 }}
               >
+                {item.top}
                 <Icon
                   style={{ width: item.size, height: item.size }}
                   className="stroke-[1.25]"

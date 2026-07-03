@@ -17,10 +17,9 @@ import {
   codeHeroIcons,
   DEV_WORDS,
 } from "@/data/heroIcons";
+import { downloadFileFromUrl } from "@/utils/helper";
 
-// Helper to simulate typed code character-by-character
-function CodeSnippet() {
-  const codeText = `const developer = {
+const codeText = `const developer = {
   name: "Ruchita Senjaliya",
   skills: [
     "React", "Next.js", "Angular",
@@ -31,6 +30,8 @@ function CodeSnippet() {
   code: () => "passion ⚡"
 };`;
 
+// Helper to simulate typed code character-by-character
+function CodeSnippet() {
   const [text, setText] = useState("");
 
   useEffect(() => {
@@ -195,25 +196,7 @@ export default function Hero({
   };
 
   const handleDownloadCV = () => {
-    const cvContent = `
-    RUCHITA SENJALIYA
-    Frontend Developer
-    Email: ruchita.senjaliya.dev@gmail.com
-    Website: https://ruchita.dev
-    GitHub: https://github.com/ruchita-senjaliya
-
-    SUMMARY:
-    Passionate frontend developer with experience building scalable web and mobile applications using React, React Native, Angular, Ionic, Next.js, and TypeScript.
-    `;
-    const blob = new Blob([cvContent], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "Ruchita_Senjaliya_Resume.txt";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    downloadFileFromUrl("/Ruchi-Resume.pdf", "Ruchi-Resume.pdf");
   };
 
   return (

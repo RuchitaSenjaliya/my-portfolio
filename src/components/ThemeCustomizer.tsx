@@ -48,8 +48,47 @@ export const accentThemes: AccentTheme[] = [
   },
 ];
 
+const applyTheme = (theme: AccentTheme) => {
+  if (typeof window === 'undefined') return;
+  const root = document.documentElement;
+  const isDark = root.classList.contains('dark');
+
+  root.style.setProperty('--primary', theme.primary);
+  root.style.setProperty('--secondary', theme.secondary);
+  root.style.setProperty('--primary-rgb', theme.primaryRgb);
+  root.style.setProperty('--secondary-rgb', theme.secondaryRgb);
+
+  // Update selection & glow variables dynamically
+  root.style.setProperty(
+    '--selection-bg',
+    isDark ? `rgba(${theme.secondaryRgb}, 0.3)` : `rgba(${theme.primaryRgb}, 0.15)`
+  );
+  root.style.setProperty(
+    '--glow-1',
+    isDark ? `rgba(${theme.primaryRgb}, 0.15)` : `rgba(${theme.primaryRgb}, 0.1)`
+  );
+  root.style.setProperty(
+    '--glow-2',
+    isDark ? `rgba(${theme.secondaryRgb}, 0.15)` : `rgba(${theme.secondaryRgb}, 0.1)`
+  );
+};
+
 export default function ThemeCustomizer() {
-  const [activeTheme, setActiveTheme] = useState<AccentTheme>(accentThemes[0]);
+  const [activeTheme, setActiveTheme] = useState<AccentTheme>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem('accent-theme');
+        if (stored) {
+          const parsed = JSON.parse(stored) as AccentTheme;
+          const matching = accentThemes.find((t) => t.id === parsed.id);
+          if (matching) return matching;
+        }
+      } catch (e) {
+        console.error('Failed to parse accent theme', e);
+      }
+    }
+    return accentThemes[0];
+  });
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -65,45 +104,8 @@ export default function ThemeCustomizer() {
   }, []);
 
   useEffect(() => {
-    // Sync with saved preference or default
-    try {
-      const stored = localStorage.getItem('accent-theme');
-      if (stored) {
-        const parsed = JSON.parse(stored) as AccentTheme;
-        const matching = accentThemes.find((t) => t.id === parsed.id);
-        if (matching) {
-          setActiveTheme(matching);
-          applyTheme(matching);
-        }
-      }
-    } catch (e) {
-      console.error('Failed to parse accent theme', e);
-    }
-  }, []);
-
-  const applyTheme = (theme: AccentTheme) => {
-    const root = document.documentElement;
-    const isDark = root.classList.contains('dark');
-
-    root.style.setProperty('--primary', theme.primary);
-    root.style.setProperty('--secondary', theme.secondary);
-    root.style.setProperty('--primary-rgb', theme.primaryRgb);
-    root.style.setProperty('--secondary-rgb', theme.secondaryRgb);
-
-    // Update selection & glow variables dynamically
-    root.style.setProperty(
-      '--selection-bg',
-      isDark ? `rgba(${theme.secondaryRgb}, 0.3)` : `rgba(${theme.primaryRgb}, 0.15)`
-    );
-    root.style.setProperty(
-      '--glow-1',
-      isDark ? `rgba(${theme.primaryRgb}, 0.15)` : `rgba(${theme.primaryRgb}, 0.1)`
-    );
-    root.style.setProperty(
-      '--glow-2',
-      isDark ? `rgba(${theme.secondaryRgb}, 0.15)` : `rgba(${theme.secondaryRgb}, 0.1)`
-    );
-  };
+    applyTheme(activeTheme);
+  }, [activeTheme]);
 
   const handleSelectTheme = (theme: AccentTheme) => {
     setActiveTheme(theme);

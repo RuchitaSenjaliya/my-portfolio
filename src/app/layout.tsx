@@ -1,60 +1,61 @@
-import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
 
 const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ruchita.dev'),
-  title: 'Ruchita Senjaliya | Professional Frontend Developer Portfolio',
-  description: 'Passionate Frontend Developer with 2+ years of experience specializing in React, React Native, Angular, Ionic, Next.js, and TypeScript. Explore projects, skills, and professional certifications.',
+  metadataBase: new URL("https://ruchita.dev"),
+  title: "Ruchita Senjaliya | Professional Frontend Developer Portfolio",
+  description:
+    "Passionate Frontend Developer with 2+ years of experience specializing in React, React Native, Next.js, and TypeScript. Explore projects, skills, and professional certifications.",
   keywords: [
-    'Ruchita Senjaliya',
-    'Frontend Developer',
-    'React Developer',
-    'React Native Developer',
-    'Angular Developer',
-    'Ionic Developer',
-    'Next.js Developer',
-    'TypeScript Developer',
-    'Portfolio Website'
+    "Ruchita Senjaliya",
+    "Frontend Developer",
+    "React Developer",
+    "React Native Developer",
+    "Next.js Developer",
+    "TypeScript Developer",
+    "Portfolio Website",
   ],
-  authors: [{ name: 'Ruchita Senjaliya' }],
-  creator: 'Ruchita Senjaliya',
+  authors: [{ name: "Ruchita Senjaliya" }],
+  creator: "Ruchita Senjaliya",
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://ruchita.dev',
-    title: 'Ruchita Senjaliya | Frontend Developer Portfolio',
-    description: 'Passionate Frontend Developer building scalable web & mobile applications using React, React Native, Angular, Next.js, and TypeScript.',
-    siteName: 'Ruchita Senjaliya Portfolio',
+    type: "website",
+    locale: "en_US",
+    url: "https://ruchita.dev",
+    title: "Ruchita Senjaliya | Frontend Developer Portfolio",
+    description:
+      "Passionate Frontend Developer building scalable web & mobile applications using React, React Native, Next.js, and TypeScript.",
+    siteName: "Ruchita Senjaliya Portfolio",
     images: [
       {
-        url: '/og-image.png', // Fallback or general og-image. If we don't have it, it is fine
+        url: "/og-image.png", // Fallback or general og-image. If we don't have it, it is fine
         width: 1200,
         height: 630,
-        alt: 'Ruchita Senjaliya Portfolio Screenshot'
-      }
-    ]
+        alt: "Ruchita Senjaliya Portfolio Screenshot",
+      },
+    ],
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Ruchita Senjaliya | Frontend Developer',
-    description: 'Passionate Frontend Developer building scalable web & mobile apps.',
-    creator: '@ruchita_senjaliya',
-    images: ['/og-image.png']
+    card: "summary_large_image",
+    title: "Ruchita Senjaliya | Frontend Developer",
+    description:
+      "Passionate Frontend Developer building scalable web & mobile apps.",
+    creator: "@ruchita_senjaliya",
+    images: ["/og-image.png"],
   },
   alternates: {
-    canonical: 'https://ruchita.dev'
-  }
+    canonical: "https://ruchita.dev",
+  },
 };
 
 export default function RootLayout({
@@ -63,7 +64,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}
+      suppressHydrationWarning
+    >
       <head>
         {/* Anti-flash Dark/Light Mode Script */}
         <script

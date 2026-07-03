@@ -1,6 +1,7 @@
 'use client';
 
-import { Github, Linkedin, Instagram, Mail, ArrowUp } from 'lucide-react';
+import { Github, Linkedin, Instagram, Mail } from 'lucide-react';
+import { smoothScrollToElement } from '@/utils/helper';
 
 const quickLinks = [
   { name: 'Home', href: '#home' },
@@ -16,19 +17,7 @@ export default function Footer() {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const targetId = href.replace('#', '');
-    const element = document.getElementById(targetId);
-    if (element) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
-    }
+    smoothScrollToElement(targetId, 80);
   };
 
   const handleScrollToTop = () => {

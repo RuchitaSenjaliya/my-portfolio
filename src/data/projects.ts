@@ -2,7 +2,6 @@ import { Project } from "../types/portfolio";
 import foodies_friend from '@/assets/images/project-img/foodies-friend.png'
 import coding_hub from '@/assets/images/project-img/coding-hub.png'
 import quick_connect from '@/assets/images/project-img/quick-connect.png'
-import code_blogs from '@/assets/images/project-img/coding-hub.png'
 import agrosmart from '@/assets/images/project-img/coding-hub.png'
 
 export const projects: Project[] = [
