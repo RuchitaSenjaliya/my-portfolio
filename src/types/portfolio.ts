@@ -3,7 +3,13 @@ import { StaticImageData } from "next/image";
 export interface Skill {
   name: string;
   level: number; // Percentage (e.g. 90)
-  category: 'Frontend' | 'Mobile' | 'State Management' | 'Backend Knowledge' | 'Database' | 'Tools';
+  category:
+    | "Frontend"
+    | "Mobile"
+    | "State Management"
+    | "Backend Knowledge"
+    | "Database"
+    | "Tools";
 }
 
 export interface Project {
@@ -15,6 +21,7 @@ export interface Project {
   image: StaticImageData; // Will use nice SVG or gradient pattern since we don't have static images
   liveUrl?: string;
   githubUrl?: string;
+  isMobile?: boolean;
 }
 
 export interface Experience {

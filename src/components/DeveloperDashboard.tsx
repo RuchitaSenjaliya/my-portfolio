@@ -49,7 +49,9 @@ export default function DeveloperDashboard() {
     contributions: [],
   });
   const [loading, setLoading] = useState(true);
-  const [selectedPeriod, setSelectedPeriod] = useState<string>(currentYear.toString());
+  const [selectedPeriod, setSelectedPeriod] = useState<string>(
+    currentYear.toString(),
+  );
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -236,7 +238,7 @@ export default function DeveloperDashboard() {
             className="text-foreground/70 text-lg leading-relaxed"
           >
             An analytics overview reflecting live Git contributions, project
-            repositories, language stack usage, and recently published articles.
+            repositories, language stack usage, and recently published projects.
           </motion.p>
         </div>
 

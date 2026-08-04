@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, X, ChevronRight, Play } from 'lucide-react';
+import { ownerInfo } from '@/data/contact';
 
 interface HistoryItem {
   command: string;
@@ -17,7 +18,7 @@ interface TerminalModeProps {
 export default function TerminalMode({ isOpen, setIsOpen }: TerminalModeProps) {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<HistoryItem[]>([
-    { command: 'help', output: 'Welcome to Ruchita\'s interactive terminal. Type "help" to see all available developer commands.' }
+    { command: 'help', output: `Welcome to ${ownerInfo.name}'s interactive terminal. Type "help" to see all available developer commands.` }
   ]);
   const consoleEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -70,7 +71,7 @@ export default function TerminalMode({ isOpen, setIsOpen }: TerminalModeProps) {
         output = (
           <div className="space-y-1">
             <p>Available commands:</p>
-            <p className="text-yellow-400">  about     <span className="text-white/60">- Learn about Ruchita Senjaliya</span></p>
+            <p className="text-yellow-400">  about     <span className="text-white/60">- Learn about {ownerInfo.name}</span></p>
             <p className="text-yellow-400">  skills    <span className="text-white/60">- Print technical capabilities</span></p>
             <p className="text-yellow-400">  projects  <span className="text-white/60">- Showcase featured applications</span></p>
             <p className="text-yellow-400">  contact   <span className="text-white/60">- Show social links and email details</span></p>
@@ -84,9 +85,9 @@ export default function TerminalMode({ isOpen, setIsOpen }: TerminalModeProps) {
       case 'about':
         output = (
           <div className="space-y-1.5">
-            <p className="text-primary font-bold">Ruchita Senjaliya - Frontend Developer</p>
+            <p className="text-primary font-bold">{ownerInfo.name} - {ownerInfo.role}</p>
             <p className="text-white/80">&quot;Passionate frontend developer with experience building scalable web and mobile applications using React, React Native, Angular, Ionic, Next.js, and TypeScript.&quot;</p>
-            <p className="text-white/60">Duration: 2+ Years Professional Experience</p>
+            <p className="text-white/60">Duration: {ownerInfo.experience} Professional Experience</p>
           </div>
         );
         break;
@@ -132,15 +133,15 @@ export default function TerminalMode({ isOpen, setIsOpen }: TerminalModeProps) {
       case 'contact':
         output = (
           <div className="space-y-1">
-            <p>Email: <a href="mailto:ruchita.senjaliya.dev@gmail.com" className="text-blue-400 hover:underline">ruchita.senjaliya.dev@gmail.com</a></p>
-            <p>LinkedIn: <a href="https://linkedin.com/in/ruchita-senjaliya" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">linkedin.com/in/ruchita-senjaliya</a></p>
-            <p>GitHub: <a href="https://github.com/ruchita-senjaliya" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">github.com/ruchita-senjaliya</a></p>
+            <p>Email: <a href={`mailto:${ownerInfo.email}`} className="text-blue-400 hover:underline">{ownerInfo.email}</a></p>
+            <p>LinkedIn: <a href={ownerInfo.linkedin.link} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">{ownerInfo.linkedin.displayUsername}</a></p>
+            <p>GitHub: <a href={ownerInfo.git.link} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">{ownerInfo.git.username}</a></p>
           </div>
         );
         break;
 
       case 'art':
-        output = "Ruchita runs a creative art showcase! She is specialized in Canvas paintings and geometric Mandala artwork. Switch to 'Canvas Mode' at the top of the navbar to visually view her collection.";
+        output = `${ownerInfo.name} runs a creative art showcase! She is specialized in Canvas paintings and geometric Mandala artwork. Switch to 'Canvas Mode' at the top of the navbar to visually view her collection.`;
         break;
 
       case 'clear':

@@ -1,22 +1,33 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Briefcase, Download, Mail, Calendar, MapPin, Copy, Check, X, Sparkles } from 'lucide-react';
-import { downloadFileFromUrl } from '@/utils/helper';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Briefcase,
+  Download,
+  Mail,
+  Calendar,
+  MapPin,
+  Copy,
+  Check,
+  X,
+  Sparkles,
+} from "lucide-react";
+import { downloadFileFromUrl } from "@/utils/helper";
+import { ownerInfo } from "@/data/contact";
 
 export default function RecruiterModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText('ruchita.senjaliya.dev@gmail.com');
+    navigator.clipboard.writeText(ownerInfo.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const handleDownloadCV = () => {
-    downloadFileFromUrl('/Ruchi-Resume.pdf', 'Ruchi-Resume.pdf');
+    downloadFileFromUrl("/Ruchi-Resume.pdf", "Ruchi-Resume.pdf");
   };
 
   return (
@@ -62,37 +73,62 @@ export default function RecruiterModal() {
                   <Briefcase className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-foreground">Recruiter Quick Summary</h3>
-                  <p className="text-xs text-foreground/50 font-medium">Core achievements and contact sheet</p>
+                  <h3 className="text-xl font-bold text-foreground">
+                    Recruiter Quick Summary
+                  </h3>
+                  <p className="text-xs text-foreground/50 font-medium">
+                    Core achievements and contact sheet
+                  </p>
                 </div>
               </div>
 
               {/* Availability Status Badge */}
               <div className="flex items-center gap-2 p-3 rounded-xl bg-green-500/10 border border-green-500/20 text-green-500 text-xs font-semibold mb-6">
                 <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-ping" />
-                <span>Available for Full-time Roles & Contracts (Immediate Onboarding)</span>
+                <span>
+                  Available for Full-time Roles (Immediate Onboarding)
+                </span>
               </div>
 
               {/* Stats & Key Details */}
               <div className="space-y-4 text-sm">
-                
                 <div className="grid grid-cols-2 gap-4">
                   <div className="p-4 rounded-xl bg-background border border-card-border">
-                    <span className="text-xs text-foreground/45 block">Experience</span>
-                    <span className="text-base font-bold text-foreground/90 block mt-1">2+ Years</span>
+                    <span className="text-xs text-foreground/45 block">
+                      Experience
+                    </span>
+                    <span className="text-base font-bold text-foreground/90 block mt-1">
+                      2+ Years
+                    </span>
                   </div>
                   <div className="p-4 rounded-xl bg-background border border-card-border">
-                    <span className="text-xs text-foreground/45 block">Specialty</span>
-                    <span className="text-base font-bold text-foreground/90 block mt-1">Frontend & Mobile</span>
+                    <span className="text-xs text-foreground/45 block">
+                      Specialty
+                    </span>
+                    <span className="text-base font-bold text-foreground/90 block mt-1">
+                      Frontend & Mobile
+                    </span>
                   </div>
                 </div>
 
                 {/* Core Stack Capsules */}
                 <div className="space-y-2">
-                  <span className="text-xs font-bold text-foreground/50 uppercase tracking-wider block">Core Frameworks</span>
+                  <span className="text-xs font-bold text-foreground/50 uppercase tracking-wider block">
+                    Core Frameworks
+                  </span>
                   <div className="flex flex-wrap gap-1.5">
-                    {['React.js', 'Next.js', 'React Native', 'Angular', 'TypeScript', 'Tailwind CSS'].map((c) => (
-                      <span key={c} className="text-[10px] font-semibold bg-primary/10 border border-primary/20 text-primary px-2.5 py-1 rounded-full">
+                    {[
+                      "React.js",
+                      "Next.js",
+                      "React Native",
+                      "Angular",
+                      "TypeScript",
+                      "Tailwind CSS",
+                    ].map((c) => (
+                      <span
+                        key={c}
+                        className="text-[10px] font-semibold bg-primary/10 border border-primary/20 text-primary px-2.5 py-1 rounded-full"
+                      >
                         {c}
                       </span>
                     ))}
@@ -115,7 +151,7 @@ export default function RecruiterModal() {
                 <div className="flex items-center justify-between p-3.5 rounded-xl bg-background border border-card-border mt-4">
                   <div className="flex items-center gap-2 text-xs font-semibold text-foreground/75">
                     <Mail className="w-4 h-4 text-foreground/50" />
-                    <span>ruchita.senjaliya.dev@gmail.com</span>
+                    <span>{ownerInfo.email}</span>
                   </div>
                   <button
                     onClick={handleCopyEmail}
@@ -134,7 +170,6 @@ export default function RecruiterModal() {
                     )}
                   </button>
                 </div>
-
               </div>
 
               {/* Action Buttons */}
@@ -147,7 +182,7 @@ export default function RecruiterModal() {
                   Resume PDF
                 </button>
                 <a
-                  href="https://linkedin.com/in/ruchita-senjaliya"
+                  href={ownerInfo.linkedin.link}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 py-3 bg-slate-800 border border-slate-700 text-white text-sm font-semibold rounded-xl hover:bg-slate-700 transition-colors cursor-pointer text-center"

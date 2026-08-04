@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { ownerInfo } from "@/data/contact";
 
 interface GithubContributionNode {
   date: string;
@@ -7,7 +8,7 @@ interface GithubContributionNode {
 }
 
 export async function GET() {
-  const username = process.env.GITHUB_USERNAME;
+  const username = process.env.GITHUB_USERNAME || ownerInfo.git.username;
   const token = process.env.GITHUB_PAT;
 
   const headers: HeadersInit = {
@@ -40,7 +41,7 @@ export async function GET() {
 
     // 3. Fetch contributions from public API
     const contribRes = await fetch(
-      `https://github-contributions-api.jogruber.de/v4/RuchitaSenjaliya`,
+      `https://github-contributions-api.jogruber.de/v4/${ownerInfo.git.username}`,
       {
         next: { revalidate: 3600 },
       },

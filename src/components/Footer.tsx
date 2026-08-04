@@ -1,7 +1,7 @@
 'use client';
 
-import { Github, Linkedin, Instagram, Mail } from 'lucide-react';
 import { smoothScrollToElement } from '@/utils/helper';
+import { ownerInfo, socialLinks } from '@/data/contact';
 
 const quickLinks = [
   { name: 'Home', href: '#home' },
@@ -43,10 +43,10 @@ export default function Footer() {
               onClick={handleScrollToTop}
               className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent cursor-pointer inline-block tracking-wider"
             >
-              Ruchita Senjaliya
+              {ownerInfo.name}
             </h2>
             <p className="text-xs text-foreground/50 mt-2 font-medium tracking-wide">
-              Frontend Developer & Mobile App Engineer
+              {ownerInfo.role} & Mobile App Engineer
             </p>
           </div>
 
@@ -66,12 +66,7 @@ export default function Footer() {
 
           {/* Social icons */}
           <div className="flex justify-center md:justify-end items-center gap-5">
-            {[
-              { Icon: Github, href: 'https://github.com/ruchita-senjaliya', label: 'GitHub' },
-              { Icon: Linkedin, href: 'https://linkedin.com/in/ruchita-senjaliya', label: 'LinkedIn' },
-              { Icon: Instagram, href: 'https://instagram.com/ruchita_senjaliya', label: 'Instagram' },
-              { Icon: Mail, href: 'mailto:ruchita.senjaliya.dev@gmail.com', label: 'Email' },
-            ].map(({ Icon, href, label }) => (
+            {socialLinks.map(({ Icon, href, label }) => (
               <a
                 key={label}
                 href={href}
@@ -92,11 +87,11 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="flex flex-col sm:flex-row justify-between items-center text-xs text-foreground/45 gap-4">
-          <p>© {currentYear} Ruchita Senjaliya. All Rights Reserved.</p>
+          <p>© {currentYear} {ownerInfo.name}. All Rights Reserved.</p>
           <div className="flex items-center gap-2">
             <span>Designed & Engineered with</span>
             <span className="text-red-500 font-bold">♥</span>
-            <span>in Gujarat, India</span>
+            <span>in {ownerInfo.location}</span>
           </div>
         </div>
       </div>

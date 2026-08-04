@@ -1,26 +1,26 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Navbar from '@/components/Navbar';
-import Hero from '@/components/Hero';
-import About from '@/components/About';
-import Skills from '@/components/Skills';
-import ProductProcess from '@/components/ProductProcess';
-import Experience from '@/components/Experience';
-import Projects from '@/components/Projects';
-import Certifications from '@/components/Certifications';
-import DeveloperDashboard from '@/components/DeveloperDashboard';
-import ArtShowcase from '@/components/ArtShowcase';
-import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
-import ScrollToTop from '@/components/ScrollToTop';
-import PageLoader from '@/components/PageLoader';
-import AIAssistant from '@/components/AIAssistant';
-import TerminalMode from '@/components/TerminalMode';
-import RecruiterModal from '@/components/RecruiterModal';
+import { useState } from "react";
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import About from "@/components/About";
+import Skills from "@/components/Skills";
+import ProductProcess from "@/components/ProductProcess";
+import Experience from "@/components/Experience";
+import Projects from "@/components/Projects";
+import Certifications from "@/components/Certifications";
+import DeveloperDashboard from "@/components/DeveloperDashboard";
+import ArtShowcase from "@/components/ArtShowcase";
+import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
+import PageLoader from "@/components/PageLoader";
+import AIAssistant from "@/components/AIAssistant";
+import TerminalMode from "@/components/TerminalMode";
+import RecruiterModal from "@/components/RecruiterModal";
 
 export default function Home() {
-  const [portfolioMode, setPortfolioMode] = useState<'code' | 'canvas'>('code');
+  const [portfolioMode, setPortfolioMode] = useState<"code" | "canvas">("code");
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(false);
 
@@ -33,7 +33,10 @@ export default function Home() {
       <ScrollToTop />
 
       {/* Floating AI Chatbot Assistant */}
-      <AIAssistant isOpen={isAIAssistantOpen} setIsOpen={setIsAIAssistantOpen} />
+      <AIAssistant
+        isOpen={isAIAssistantOpen}
+        setIsOpen={setIsAIAssistantOpen}
+      />
 
       {/* Floating Retro CLI Terminal Console */}
       <TerminalMode isOpen={isTerminalOpen} setIsOpen={setIsTerminalOpen} />
@@ -42,9 +45,9 @@ export default function Home() {
       <RecruiterModal />
 
       {/* Primary Sticky Header with Switcher Props */}
-      <Navbar 
-        portfolioMode={portfolioMode} 
-        setPortfolioMode={setPortfolioMode} 
+      <Navbar
+        portfolioMode={portfolioMode}
+        setPortfolioMode={setPortfolioMode}
         isTerminalOpen={isTerminalOpen}
         setIsTerminalOpen={setIsTerminalOpen}
         isAIAssistantOpen={isAIAssistantOpen}
@@ -56,11 +59,11 @@ export default function Home() {
         <Hero portfolioMode={portfolioMode} />
 
         {/* Conditional Layouts based on active persona */}
-        {portfolioMode === 'code' ? (
+        {portfolioMode === "code" ? (
           <>
             <About />
             <Skills />
-            <ProductProcess />
+            {/* <ProductProcess /> */}
             <Experience />
             <Projects />
             <Certifications />

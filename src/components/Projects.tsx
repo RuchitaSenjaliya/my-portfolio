@@ -1,17 +1,21 @@
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { projects } from '../data/projects';
-import { ExternalLink, Github } from 'lucide-react';
-import Image from 'next/image';
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { projects } from "../data/projects";
+import { ExternalLink, Github } from "lucide-react";
+import Image from "next/image";
 
 export default function Projects() {
   const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: true, margin: '-10% 0px' });
+  const isInView = useInView(containerRef, { once: true, margin: "-10% 0px" });
 
   return (
-    <section id="projects" ref={containerRef} className="py-24 bg-card-bg/25 border-y border-card-border relative overflow-hidden">
+    <section
+      id="projects"
+      ref={containerRef}
+      className="py-24 bg-card-bg/25 border-y border-card-border relative overflow-hidden"
+    >
       {/* Decorative Blur Backgrounds */}
       <div className="absolute top-1/4 right-0 w-[350px] h-87.5 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 left-0 w-[350px] h-87.5 bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
@@ -25,7 +29,7 @@ export default function Projects() {
             transition={{ duration: 0.5 }}
             className="text-3xl sm:text-4xl font-bold tracking-tight mb-4"
           >
-            Featured Projects
+            My Projects
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -33,12 +37,14 @@ export default function Projects() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-foreground/70 text-lg leading-relaxed"
           >
-            A curated showcase of scalable web and mobile applications I have designed and programmed, demonstrating end-to-end implementation and styling.
+            A curated showcase of scalable web and mobile applications I have
+            designed and programmed, demonstrating end-to-end implementation and
+            styling.
           </motion.p>
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {projects.map((project, idx) => (
             <motion.div
               key={project.id}
@@ -48,9 +54,33 @@ export default function Projects() {
               className="group rounded-3xl bg-card-bg border border-card-border overflow-hidden flex flex-col justify-between hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
             >
               <div>
-                {/* Project Header (SVG Mock Graphic instead of generic image placeholder) */}
+                {/* Project Header (Responsive Mock Graphic supporting both Desktop and Mobile frames) */}
                 <div className="relative h-56 w-full border-b border-card-border overflow-hidden bg-slate-950">
-                  <Image src={project.image} alt={project.title} layout="fill" objectFit="contain" />
+                  {project.isMobile ? (
+                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950 flex items-center justify-center p-3 select-none">
+                      {/* CSS Phone Frame Mockup */}
+                      <div className="relative h-[200px] aspect-[9/19.5] rounded-[24px] border-[5px] border-slate-800 bg-slate-950 overflow-hidden shadow-2xl flex flex-col justify-between">
+                        {/* Speaker/Camera Notch (Dynamic Island shape) */}
+                        <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-10 h-3 rounded-full bg-slate-800 z-30" />
+                        {/* Mobile Screenshot */}
+                        <div className="relative w-full h-full">
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            layout="fill"
+                            objectFit="cover"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  )}
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 z-20">
                     {project.liveUrl && (
@@ -91,7 +121,9 @@ export default function Projects() {
 
                   {/* Highlights Bullet List */}
                   <div className="mt-5">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-foreground/50 mb-2">Key Features</h4>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-foreground/50 mb-2">
+                      Key Features
+                    </h4>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-foreground/75">
                       {project.features.map((feat, fIdx) => (
                         <li key={fIdx} className="flex items-center gap-2">
