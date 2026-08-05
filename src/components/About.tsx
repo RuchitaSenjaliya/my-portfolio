@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
 import { Award, Briefcase, Zap, Smartphone, Cpu, Code2 } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { projects } from "@/data/projects";
+import { skills } from "@/data/skills";
 
 // Counter component for animated statistics
 function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
@@ -48,9 +50,9 @@ export default function About() {
 
   const stats = [
     { label: "Years Experience", value: 2, suffix: "+" },
-    { label: "Projects Completed", value: 8, suffix: "+" },
-    { label: "Technologies Used", value: 12, suffix: "+" },
-    { label: "Happy Clients", value: 7, suffix: "+" },
+    { label: "Projects Completed", value: projects.length, suffix: "+" },
+    { label: "Technologies Used", value: skills.length, suffix: "+" },
+    // { label: "Happy Clients", value: 7, suffix: "+" },
   ];
 
   const highlights = [
@@ -110,7 +112,7 @@ export default function About() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-20">
           {stats.map((stat, idx) => (
             <motion.div
               key={stat.label}

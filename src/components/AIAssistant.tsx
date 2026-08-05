@@ -6,6 +6,8 @@ import { X, Send, Sparkles, User, Bot, Loader2 } from "lucide-react";
 
 import { downloadFileFromUrl } from "@/utils/helper";
 import { ownerInfo } from "@/data/contact";
+import { projects } from "@/data/projects";
+import { skills } from "@/data/skills";
 
 interface Message {
   sender: "user" | "bot";
@@ -20,10 +22,15 @@ const suggestions = [
   "Download Resume.",
 ];
 
+const topSkillsList = skills.map((s) => s.name).join(", ");
+const projectListFormatted = projects
+  .map((p, idx) => `${idx + 1}. ${p.title} (${p.tech.slice(0, 3).join(", ")})`)
+  .join("\n");
+
 const knowledgeBase: Record<string, string> = {
   default:
     `I'm ${ownerInfo.name}'s AI Assistant! Ask me anything about her skills, experience, or projects. You can try clicking the suggestions below.`,
-  tech: `${ownerInfo.name} is a ${ownerInfo.role} with ${ownerInfo.experience} of experience. Her core stack includes React.js, Next.js, Angular, React Native, Expo, Ionic, JavaScript, TypeScript, Redux, Tailwind CSS, Node.js, Express, PostgreSQL, and Firebase.`,
+  tech: `${ownerInfo.name} is a ${ownerInfo.role} with ${ownerInfo.experience} of experience. Her core stack includes ${topSkillsList}.`,
   experience:
     `${ownerInfo.name} has been working as a ${ownerInfo.role} since 2023. She has built scalable web apps with React, hybrid/native mobile apps with React Native, and maintained enterprise projects with Angular and Ionic.`,
   agrosmart:
@@ -31,7 +38,7 @@ const knowledgeBase: Record<string, string> = {
   reactnative:
     `${ownerInfo.name}'s React Native projects include AgroSmart (a smart agritech platform with Firebase) and other hybrid applications. She has extensive experience with Expo, state management, and push notification configurations.`,
   projects:
-    `${ownerInfo.name}'s major projects are:\n1. Employee Management System (React, Redux, Material UI)\n2. Hotel Management System (Angular, Ionic, Firebase)\n3. Blog AI Generator (Next.js, OpenAI API)\n4. AgroSmart (React Native, Firebase, WhatsApp)`,
+    `${ownerInfo.name}'s major projects are:\n${projectListFormatted}`,
   resume:
     `You can download ${ownerInfo.name}'s resume right from this chat! [Click here to download Resume](action:download)`,
   art: `Yes, besides coding, ${ownerInfo.name} is a passionate artist! She creates beautiful Mandala Art and Canvas Paintings. Switch to 'Canvas Mode' at the top of the navbar to explore her art gallery!`,

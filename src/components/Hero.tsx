@@ -19,12 +19,17 @@ import {
 } from "@/data/heroIcons";
 import { downloadFileFromUrl } from "@/utils/helper";
 import { ownerInfo, socialLinks } from "@/data/contact";
+import { skills } from "@/data/skills";
+
+const topSkillsSnippet = skills
+  .slice(0, 5)
+  .map((s) => `"${s.name}"`)
+  .join(", ");
 
 const codeText = `const developer = {
   name: "${ownerInfo.name}",
   skills: [
-    "React", "Next.js", "Angular",
-    "React Native", "TypeScript"
+    ${topSkillsSnippet}
   ],
   creativity: "Canvas & Mandala Art",
   available: true,
