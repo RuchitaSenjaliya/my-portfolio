@@ -1,25 +1,34 @@
 import { Project } from "../types/portfolio";
-import foodies_friend from '@/assets/images/project-img/foodies-friend.png'
-import coding_hub from '@/assets/images/project-img/coding-hub.png'
-import quick_connect from '@/assets/images/project-img/quick-connect.png'
-import agrosmart from '@/assets/images/project-img/coding-hub.png'
+import intelli_agent from "@/assets/images/project-img/intelli-agent.png";
+import coding_hub from "@/assets/images/project-img/coding-hub.png";
+import quick_connect from "@/assets/images/project-img/quick-connect.png";
+import agrosmart from "@/assets/images/project-img/agrosmart.png";
 
 export const projects: Project[] = [
   {
-    id: "proj-1",
-    title: "Foodies Friend",
+    id: "intelliagent",
+    title: "IntelliAgent - AI Chat Platform",
     description:
-      "A modern food discovery application that helps users explore recipes, search meals, and manage their favorite dishes through an intuitive user interface.",
-    tech: ["React", "JavaScript", "CSS", "REST API"],
-    features: [
-      "Recipe Search",
-      "Meal Categories",
-      "Favorite Recipes",
-      "Responsive Design",
+      "A premium, design-first AI chat application featuring custom liquid glassmorphic animations, coordinate-based circular theme transitions, and a search-enabled Express backend powered by Groq and Tavily APIs.",
+    tech: [
+      "React",
+      "TypeScript",
+      "Tailwind CSS v4",
+      "Framer Motion",
+      "Node.js",
+      "Express",
+      "Groq Cloud API",
+      "Tavily Search API",
     ],
-    image: foodies_friend,
-    liveUrl: "https://foodies-friend.vercel.app/",
-    githubUrl: "https://github.com/RuchitaSenjaliya/Foodies-Friend",
+    features: [
+      "Liquid Glass Design",
+      "Radial Theme Transitions",
+      "Real-time Web Search",
+      "Router Auth Guards",
+    ],
+    image: intelli_agent,
+    liveUrl: "https://intelliagent.vercel.app/", // Replace with your deployment link
+    githubUrl: "https://github.com/RuchitaSenjaliya/IntelliAgent",
   },
 
   {
@@ -39,22 +48,22 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/RuchitaSenjaliya/Coding-Hub",
   },
 
-  {
-    id: "proj-3",
-    title: "QuickConnect",
-    description:
-      "A real-time communication platform designed to simplify user interaction through instant messaging and seamless connectivity features.",
-    tech: ["React", "Node.js", "Socket.io", "JavaScript"],
-    features: [
-      "Real-time Messaging",
-      "User Authentication",
-      "Instant Notifications",
-      "Responsive Interface",
-    ],
-    image: quick_connect,
-    liveUrl: "https://quick-connect-blush.vercel.app",
-    githubUrl: "https://github.com/RuchitaSenjaliya/QuickConnect",
-  },
+  // {
+  //   id: "proj-3",
+  //   title: "QuickConnect",
+  //   description:
+  //     "A real-time communication platform designed to simplify user interaction through instant messaging and seamless connectivity features.",
+  //   tech: ["React", "Node.js", "Socket.io", "JavaScript"],
+  //   features: [
+  //     "Real-time Messaging",
+  //     "User Authentication",
+  //     "Instant Notifications",
+  //     "Responsive Interface",
+  //   ],
+  //   image: quick_connect,
+  //   liveUrl: "https://quick-connect-blush.vercel.app",
+  //   githubUrl: "https://github.com/RuchitaSenjaliya/QuickConnect",
+  // },
 
   // {
   //   id: "proj-4",
@@ -87,5 +96,6 @@ export const projects: Project[] = [
     image: agrosmart,
     liveUrl: "https://expo.dev/@ruchita/projects/agrosmart",
     githubUrl: "https://github.com/RuchitaSenjaliya/AgroSmart",
+    isMobile: true,
   },
 ];

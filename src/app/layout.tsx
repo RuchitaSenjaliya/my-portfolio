@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ownerInfo } from "@/data/contact";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,48 +14,48 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ruchita.dev"),
-  title: "Ruchita Senjaliya | Professional Frontend Developer Portfolio",
+  metadataBase: new URL(ownerInfo.siteUrl),
+  title: `${ownerInfo.name} | Professional ${ownerInfo.role} Portfolio`,
   description:
-    "Passionate Frontend Developer with 2+ years of experience specializing in React, React Native, Next.js, and TypeScript. Explore projects, skills, and professional certifications.",
+    `Passionate ${ownerInfo.role} with ${ownerInfo.experience} of experience specializing in React, React Native, Next.js, and TypeScript. Explore projects, skills, and professional certifications.`,
   keywords: [
-    "Ruchita Senjaliya",
-    "Frontend Developer",
+    ownerInfo.name,
+    ownerInfo.role,
     "React Developer",
     "React Native Developer",
     "Next.js Developer",
     "TypeScript Developer",
     "Portfolio Website",
   ],
-  authors: [{ name: "Ruchita Senjaliya" }],
-  creator: "Ruchita Senjaliya",
+  authors: [{ name: ownerInfo.name }],
+  creator: ownerInfo.name,
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://ruchita.dev",
-    title: "Ruchita Senjaliya | Frontend Developer Portfolio",
+    url: ownerInfo.siteUrl,
+    title: `${ownerInfo.name} | ${ownerInfo.role} Portfolio`,
     description:
-      "Passionate Frontend Developer building scalable web & mobile applications using React, React Native, Next.js, and TypeScript.",
-    siteName: "Ruchita Senjaliya Portfolio",
+      `Passionate ${ownerInfo.role} building scalable web & mobile applications using React, React Native, Next.js, and TypeScript.`,
+    siteName: `${ownerInfo.name} Portfolio`,
     images: [
       {
-        url: "/og-image.png", // Fallback or general og-image. If we don't have it, it is fine
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Ruchita Senjaliya Portfolio Screenshot",
+        alt: `${ownerInfo.name} Portfolio Screenshot`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ruchita Senjaliya | Frontend Developer",
+    title: `${ownerInfo.name} | ${ownerInfo.role}`,
     description:
-      "Passionate Frontend Developer building scalable web & mobile apps.",
-    creator: "@ruchita_senjaliya",
+      `Passionate ${ownerInfo.role} building scalable web & mobile apps.`,
+    creator: ownerInfo.twitterHandle,
     images: ["/og-image.png"],
   },
   alternates: {
-    canonical: "https://ruchita.dev",
+    canonical: ownerInfo.siteUrl,
   },
 };
 

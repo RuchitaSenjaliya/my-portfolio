@@ -3,7 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
-  
+
   --primary: #2563eb;
   --primary-rgb: 37, 99, 235;
   --secondary: #7c3aed;
@@ -11,10 +11,10 @@
 
   --card: #f8fafc;
   --card-border: #e2e8f0;
-  
+
   --nav-bg: rgba(255, 255, 255, 0.7);
   --selection-bg: rgba(37, 99, 235, 0.15);
-  
+
   --glow-1: rgba(37, 99, 235, 0.1);
   --glow-2: rgba(124, 58, 237, 0.1);
 }
@@ -22,13 +22,13 @@
 .dark {
   --background: #090d16;
   --foreground: #f1f5f9;
-  
+
   --card: #0f172a;
   --card-border: #1e293b;
-  
+
   --nav-bg: rgba(9, 13, 22, 0.7);
   --selection-bg: rgba(124, 58, 237, 0.3);
-  
+
   --glow-1: rgba(37, 99, 235, 0.15);
   --glow-2: rgba(124, 58, 237, 0.15);
 }
@@ -40,9 +40,11 @@
   --color-secondary: var(--secondary);
   --color-card-bg: var(--card);
   --color-card-border: var(--card-border);
-  
+
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, monospace;
 }
 
 html {
@@ -88,7 +90,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.recruiter-modal{
+.recruiter-modal {
   background: #ffffff;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -100,7 +102,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.dark .recruiter-modal{
+.dark .recruiter-modal {
   background: #0f172a;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -108,20 +110,21 @@ body {
 }
 
 .glass-nav {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.897);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .dark .glass-nav {
-  background: rgba(9, 13, 22, 0.8);
+  background: rgba(9, 13, 22, 0.822);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Animated Glow Gradients */
 @keyframes pulseGlow {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1) translate(0px, 0px);
   }
   33% {

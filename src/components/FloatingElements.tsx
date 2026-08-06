@@ -58,9 +58,9 @@ const codeItems: FloatingItem[] = [
   },
   {
     Icon: Cpu,
-    top: "42%",
+    top: "0%",
     left: "0%",
-    size: 32,
+    size: 302,
     delay: 1,
     duration: 22,
     driftX: 10,

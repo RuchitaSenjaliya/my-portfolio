@@ -12,6 +12,7 @@ import {
   CheckCircle2,
   AlertCircle,
 } from "lucide-react";
+import { contactDetails } from "@/data/contact";
 
 interface FormState {
   name: string;
@@ -42,6 +43,7 @@ export default function Contact() {
   const [status, setStatus] = useState<
     "idle" | "sending" | "success" | "error"
   >("idle");
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const validate = (): boolean => {
     const tempErrors: FormErrors = {};
@@ -71,6 +73,7 @@ export default function Contact() {
     if (errors[name as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
+    if (apiError) setApiError(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -78,43 +81,35 @@ export default function Contact() {
     if (!validate()) return;
 
     setStatus("sending");
+    setApiError(null);
 
     try {
-      // Simulate API call for the form submission
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setStatus("success");
-      setForm({ name: "", email: "", subject: "", message: "" });
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setStatus("success");
+        setForm({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setStatus("error");
+        setApiError(
+          data.error || "Failed to send message. Please try again later.",
+        );
+      }
     } catch {
       setStatus("error");
+      setApiError(
+        "Network error. Please check your internet connection and try again.",
+      );
     }
   };
-
-  const contactDetails = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: "ruchita.senjaliya.dev@gmail.com",
-      href: "mailto:ruchita.senjaliya.dev@gmail.com",
-    },
-    {
-      icon: Linkedin,
-      label: "LinkedIn",
-      value: "linkedin.com/in/ruchita-senjaliya",
-      href: "https://www.linkedin.com/in/ruchita-senjaliya-385453228",
-    },
-    {
-      icon: Github,
-      label: "GitHub",
-      value: "RuchitaSenjaliya",
-      href: "https://github.com/RuchitaSenjaliya",
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: "Gujarat, India",
-      href: "https://maps.google.com/?q=Gujarat,India",
-    },
-  ];
 
   return (
     <section
@@ -211,6 +206,15 @@ export default function Contact() {
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
+                {apiError && (
+                  <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-500 text-sm flex items-start gap-2.5">
+                    <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-semibold">Unable to Send Message</p>
+                      <p className="text-xs opacity-90 mt-0.5">{apiError}</p>
+                    </div>
+                  </div>
+                )}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {/* Name field */}
                   <div className="space-y-2">

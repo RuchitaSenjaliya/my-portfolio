@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Sparkles, User, Bot, Loader2 } from "lucide-react";
 
 import { downloadFileFromUrl } from "@/utils/helper";
+import { ownerInfo } from "@/data/contact";
+import { projects } from "@/data/projects";
+import { skills } from "@/data/skills";
 
 interface Message {
   sender: "user" | "bot";
@@ -19,23 +22,28 @@ const suggestions = [
   "Download Resume.",
 ];
 
+const topSkillsList = skills.map((s) => s.name).join(", ");
+const projectListFormatted = projects
+  .map((p, idx) => `${idx + 1}. ${p.title} (${p.tech.slice(0, 3).join(", ")})`)
+  .join("\n");
+
 const knowledgeBase: Record<string, string> = {
   default:
-    "I'm Ruchita's AI Assistant! Ask me anything about her skills, experience, or projects. You can try clicking the suggestions below.",
-  tech: "Ruchita is a Frontend Developer with 2+ years of experience. Her core stack includes React.js, Next.js, Angular, React Native, Expo, Ionic, JavaScript, TypeScript, Redux, Tailwind CSS, Node.js, Express, PostgreSQL, and Firebase.",
+    `I'm ${ownerInfo.name}'s AI Assistant! Ask me anything about her skills, experience, or projects. You can try clicking the suggestions below.`,
+  tech: `${ownerInfo.name} is a ${ownerInfo.role} with ${ownerInfo.experience} of experience. Her core stack includes ${topSkillsList}.`,
   experience:
-    "Ruchita has been working as a Frontend Developer since 2023. She has built scalable web apps with React, hybrid/native mobile apps with React Native, and maintained enterprise projects with Angular and Ionic.",
+    `${ownerInfo.name} has been working as a ${ownerInfo.role} since 2023. She has built scalable web apps with React, hybrid/native mobile apps with React Native, and maintained enterprise projects with Angular and Ionic.`,
   agrosmart:
-    "AgroSmart is a React Native app built by Ruchita. It integrates Firebase, Redux Toolkit, and the WhatsApp API, allowing farmers to list products, receive push notifications, check pricing alerts, and chat directly with buyers.",
+    `AgroSmart is a React Native app built by ${ownerInfo.name}. It integrates Firebase, Redux Toolkit, and the WhatsApp API, allowing farmers to list products, receive push notifications, check pricing alerts, and chat directly with buyers.`,
   reactnative:
-    "Ruchita's React Native projects include AgroSmart (a smart agritech platform with Firebase) and other hybrid applications. She has extensive experience with Expo, state management, and push notification configurations.",
+    `${ownerInfo.name}'s React Native projects include AgroSmart (a smart agritech platform with Firebase) and other hybrid applications. She has extensive experience with Expo, state management, and push notification configurations.`,
   projects:
-    "Ruchita's major projects are:\n1. Employee Management System (React, Redux, Material UI)\n2. Hotel Management System (Angular, Ionic, Firebase)\n3. Blog AI Generator (Next.js, OpenAI API)\n4. AgroSmart (React Native, Firebase, WhatsApp)",
+    `${ownerInfo.name}'s major projects are:\n${projectListFormatted}`,
   resume:
-    "You can download Ruchita's resume right from this chat! [Click here to download Resume](action:download)",
-  art: "Yes, besides coding, Ruchita is a passionate artist! She creates beautiful Mandala Art and Canvas Paintings. Switch to 'Canvas Mode' at the top of the navbar to explore her art gallery!",
+    `You can download ${ownerInfo.name}'s resume right from this chat! [Click here to download Resume](action:download)`,
+  art: `Yes, besides coding, ${ownerInfo.name} is a passionate artist! She creates beautiful Mandala Art and Canvas Paintings. Switch to 'Canvas Mode' at the top of the navbar to explore her art gallery!`,
   contact:
-    "You can reach Ruchita via email at ruchita.senjaliya.dev@gmail.com, find her on LinkedIn (linkedin.com/in/ruchita-senjaliya), or GitHub (github.com/ruchita-senjaliya).",
+    `You can reach ${ownerInfo.name} via email at ${ownerInfo.email}, find her on LinkedIn (${ownerInfo.linkedin.link}), or GitHub (${ownerInfo.git.link}).`,
 };
 
 interface AIAssistantProps {
@@ -107,7 +115,7 @@ export default function AIAssistant({ isOpen, setIsOpen }: AIAssistantProps) {
       q.includes("history")
     )
       return knowledgeBase.experience;
-    return "I'm not sure about that, but Ruchita is skilled in React, Next.js, Angular, React Native, and Ionic! You can reach her at ruchita.senjaliya.dev@gmail.com.";
+    return `I'm not sure about that, but ${ownerInfo.name} is skilled in React, Next.js, Angular, React Native, and Ionic! You can reach her at ${ownerInfo.email}.`;
   };
 
   const simulateBotResponse = (textResponse: string) => {

@@ -18,12 +18,18 @@ import {
   DEV_WORDS,
 } from "@/data/heroIcons";
 import { downloadFileFromUrl } from "@/utils/helper";
+import { ownerInfo, socialLinks } from "@/data/contact";
+import { skills } from "@/data/skills";
+
+const topSkillsSnippet = skills
+  .slice(0, 5)
+  .map((s) => `"${s.name}"`)
+  .join(", ");
 
 const codeText = `const developer = {
-  name: "Ruchita Senjaliya",
+  name: "${ownerInfo.name}",
   skills: [
-    "React", "Next.js", "Angular",
-    "React Native", "TypeScript"
+    ${topSkillsSnippet}
   ],
   creativity: "Canvas & Mandala Art",
   available: true,
@@ -343,28 +349,7 @@ export default function Hero({
               transition={{ duration: 0.8, delay: 0.6 }}
               className="flex items-center gap-4 mt-12"
             >
-              {[
-                {
-                  Icon: Github,
-                  href: "https://github.com/RuchitaSenjaliya",
-                  label: "GitHub",
-                },
-                {
-                  Icon: Linkedin,
-                  href: "https://linkedin.com/in/ruchita-senjaliya",
-                  label: "LinkedIn",
-                },
-                {
-                  Icon: Instagram,
-                  href: "https://instagram.com/ruchita_senjaliya",
-                  label: "Instagram",
-                },
-                {
-                  Icon: Mail,
-                  href: "mailto:senjaliyaruchita@gmail.com",
-                  label: "Email",
-                },
-              ].map(({ Icon, href, label }) => (
+              {socialLinks.map(({ Icon, href, label }) => (
                 <motion.a
                   key={label}
                   href={href}

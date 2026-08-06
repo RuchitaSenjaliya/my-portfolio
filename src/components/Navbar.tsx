@@ -215,7 +215,7 @@ export default function Navbar({
         {/* Mobile layout controls */}
         <div className="flex items-center gap-2 lg:hidden select-none">
           {/* Mode Switcher */}
-          <div className="flex items-center bg-card-bg/60 border border-card-border p-0.5 rounded-full text-[10px]">
+          {/* <div className="flex items-center bg-card-bg/60 border border-card-border p-0.5 rounded-full text-[10px]">
             <button
               onClick={() => setPortfolioMode("code")}
               className={`flex items-center gap-1 px-2.5 py-1 rounded-full font-bold transition-all cursor-pointer ${
@@ -238,7 +238,7 @@ export default function Navbar({
               <Palette className="w-3 h-3" />
               Art
             </button>
-          </div>
+          </div> */}
 
           <button
             onClick={() => setIsTerminalOpen(!isTerminalOpen)}
@@ -252,7 +252,7 @@ export default function Navbar({
             <Terminal className="w-4.5 h-4.5" />
           </button>
 
-          <button
+          {/* <button
             onClick={() => setIsAIAssistantOpen(!isAIAssistantOpen)}
             className={`flex items-center justify-center w-8 h-8 rounded-full border transition-colors ${
               isAIAssistantOpen
@@ -262,7 +262,7 @@ export default function Navbar({
             aria-label="AI Assistant"
           >
             <MessageSquareCode className="w-4.5 h-4.5" />
-          </button>
+          </button> */}
 
           <ThemeToggle />
           <ThemeCustomizer />

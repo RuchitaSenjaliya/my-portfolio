@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Palette, Check } from 'lucide-react';
+import { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Palette, Check } from "lucide-react";
 
 export interface AccentTheme {
   id: string;
@@ -15,76 +15,82 @@ export interface AccentTheme {
 
 export const accentThemes: AccentTheme[] = [
   {
-    id: 'classic-indigo',
-    name: 'Classic Indigo',
-    primary: '#2563eb',
-    secondary: '#7c3aed',
-    primaryRgb: '37, 99, 235',
-    secondaryRgb: '124, 58, 237',
+    id: "classic-indigo",
+    name: "Classic Indigo",
+    primary: "#2563eb",
+    secondary: "#7c3aed",
+    primaryRgb: "37, 99, 235",
+    secondaryRgb: "124, 58, 237",
   },
   {
-    id: 'emerald-teal',
-    name: 'Emerald Teal',
-    primary: '#059669',
-    secondary: '#0d9488',
-    primaryRgb: '5, 150, 105',
-    secondaryRgb: '13, 148, 136',
+    id: "emerald-teal",
+    name: "Emerald Teal",
+    primary: "#059669",
+    secondary: "#0d9488",
+    primaryRgb: "5, 150, 105",
+    secondaryRgb: "13, 148, 136",
   },
   {
-    id: 'cyber-sunset',
-    name: 'Cyber Sunset',
-    primary: '#e11d48',
-    secondary: '#d97706',
-    primaryRgb: '225, 29, 72',
-    secondaryRgb: '217, 119, 6',
+    id: "cyber-sunset",
+    name: "Cyber Sunset",
+    primary: "#e11d48",
+    secondary: "#d97706",
+    primaryRgb: "225, 29, 72",
+    secondaryRgb: "217, 119, 6",
   },
   {
-    id: 'neon-cyber',
-    name: 'Neon Cyber',
-    primary: '#0891b2',
-    secondary: '#c026d3',
-    primaryRgb: '8, 145, 178',
-    secondaryRgb: '192, 38, 211',
+    id: "neon-cyber",
+    name: "Neon Cyber",
+    primary: "#0891b2",
+    secondary: "#c026d3",
+    primaryRgb: "8, 145, 178",
+    secondaryRgb: "192, 38, 211",
   },
 ];
 
 const applyTheme = (theme: AccentTheme) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   const root = document.documentElement;
-  const isDark = root.classList.contains('dark');
+  const isDark = root.classList.contains("dark");
 
-  root.style.setProperty('--primary', theme.primary);
-  root.style.setProperty('--secondary', theme.secondary);
-  root.style.setProperty('--primary-rgb', theme.primaryRgb);
-  root.style.setProperty('--secondary-rgb', theme.secondaryRgb);
+  root.style.setProperty("--primary", theme.primary);
+  root.style.setProperty("--secondary", theme.secondary);
+  root.style.setProperty("--primary-rgb", theme.primaryRgb);
+  root.style.setProperty("--secondary-rgb", theme.secondaryRgb);
 
   // Update selection & glow variables dynamically
   root.style.setProperty(
-    '--selection-bg',
-    isDark ? `rgba(${theme.secondaryRgb}, 0.3)` : `rgba(${theme.primaryRgb}, 0.15)`
+    "--selection-bg",
+    isDark
+      ? `rgba(${theme.secondaryRgb}, 0.3)`
+      : `rgba(${theme.primaryRgb}, 0.15)`,
   );
   root.style.setProperty(
-    '--glow-1',
-    isDark ? `rgba(${theme.primaryRgb}, 0.15)` : `rgba(${theme.primaryRgb}, 0.1)`
+    "--glow-1",
+    isDark
+      ? `rgba(${theme.primaryRgb}, 0.15)`
+      : `rgba(${theme.primaryRgb}, 0.1)`,
   );
   root.style.setProperty(
-    '--glow-2',
-    isDark ? `rgba(${theme.secondaryRgb}, 0.15)` : `rgba(${theme.secondaryRgb}, 0.1)`
+    "--glow-2",
+    isDark
+      ? `rgba(${theme.secondaryRgb}, 0.15)`
+      : `rgba(${theme.secondaryRgb}, 0.1)`,
   );
 };
 
 export default function ThemeCustomizer() {
   const [activeTheme, setActiveTheme] = useState<AccentTheme>(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       try {
-        const stored = localStorage.getItem('accent-theme');
+        const stored = localStorage.getItem("accent-theme");
         if (stored) {
           const parsed = JSON.parse(stored) as AccentTheme;
           const matching = accentThemes.find((t) => t.id === parsed.id);
           if (matching) return matching;
         }
       } catch (e) {
-        console.error('Failed to parse accent theme', e);
+        console.error("Failed to parse accent theme", e);
       }
     }
     return accentThemes[0];
@@ -95,12 +101,15 @@ export default function ThemeCustomizer() {
   useEffect(() => {
     // Close dropdown on click outside
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -110,7 +119,7 @@ export default function ThemeCustomizer() {
   const handleSelectTheme = (theme: AccentTheme) => {
     setActiveTheme(theme);
     applyTheme(theme);
-    localStorage.setItem('accent-theme', JSON.stringify(theme));
+    localStorage.setItem("accent-theme", JSON.stringify(theme));
   };
 
   return (
@@ -143,8 +152,8 @@ export default function ThemeCustomizer() {
                   onClick={() => handleSelectTheme(theme)}
                   className={`w-full flex items-center justify-between p-2 rounded-xl text-left text-sm transition-all duration-200 cursor-pointer ${
                     activeTheme.id === theme.id
-                      ? 'bg-primary/10 text-primary font-semibold'
-                      : 'hover:bg-primary/5 text-foreground/85'
+                      ? "bg-primary/10 text-primary font-semibold"
+                      : "hover:bg-primary/5 text-foreground/85"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
@@ -161,7 +170,9 @@ export default function ThemeCustomizer() {
                     </div>
                     <span>{theme.name}</span>
                   </div>
-                  {activeTheme.id === theme.id && <Check className="w-4 h-4 text-primary shrink-0" />}
+                  {activeTheme.id === theme.id && (
+                    <Check className="w-4 h-4 text-primary shrink-0" />
+                  )}
                 </button>
               ))}
             </div>

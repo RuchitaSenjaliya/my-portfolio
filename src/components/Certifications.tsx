@@ -1,16 +1,20 @@
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { certifications } from '../data/certifications';
-import { Award, ArrowUpRight, GraduationCap } from 'lucide-react';
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { certifications } from "../data/certifications";
+import { Award, ArrowUpRight, GraduationCap } from "lucide-react";
 
 export default function Certifications() {
   const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: true, margin: '-20% 0px' });
+  const isInView = useInView(containerRef, { once: true, margin: "-20% 0px" });
 
   return (
-    <section id="certifications" ref={containerRef} className="py-24 bg-background relative overflow-hidden">
+    <section
+      id="certifications"
+      ref={containerRef}
+      className="py-24 bg-background relative overflow-hidden"
+    >
       {/* Decorative backdrop gradients */}
       <div className="absolute right-0 top-1/4 w-[250px] h-[250px] bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute left-0 bottom-1/4 w-[250px] h-[250px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
@@ -32,7 +36,8 @@ export default function Certifications() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-foreground/70 text-lg leading-relaxed"
           >
-            Professional milestones and validation of technical capabilities certified by industry-leading academies.
+            Professional milestones and validation of technical capabilities
+            certified by industry-leading academies.
           </motion.p>
         </div>
 
@@ -52,7 +57,7 @@ export default function Certifications() {
                   <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
                     <Award className="w-6 h-6" />
                   </div>
-                  {cert.credentialUrl && (
+                  {/* {cert.credentialUrl && (
                     <a
                       href={cert.credentialUrl}
                       target="_blank"
@@ -62,7 +67,7 @@ export default function Certifications() {
                     >
                       <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </a>
-                  )}
+                  )} */}
                 </div>
 
                 {/* Title and details */}
@@ -78,7 +83,9 @@ export default function Certifications() {
               {/* Date Footer */}
               <div className="mt-6 pt-4 border-t border-card-border/60 flex items-center justify-between text-xs text-foreground/50">
                 <span>Credential Date</span>
-                <span className="font-semibold text-foreground/70">{cert.date}</span>
+                <span className="font-semibold text-foreground/70">
+                  {cert.date}
+                </span>
               </div>
             </motion.div>
           ))}

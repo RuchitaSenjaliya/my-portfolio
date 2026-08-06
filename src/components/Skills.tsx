@@ -55,8 +55,8 @@ export default function Skills() {
   const isInView = useInView(containerRef, { once: true, margin: '-10% 0px' });
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
-  // Core categories
-  const categories = ['All', 'Frontend', 'Mobile', 'State Management', 'Database', 'Tools'];
+  // Core categories derived dynamically from skills dataset
+  const categories = ['All', ...Array.from(new Set(skills.map((s) => s.category)))];
 
   // Filter skills based on selected category
   const filteredSkills = selectedCategory === 'All'

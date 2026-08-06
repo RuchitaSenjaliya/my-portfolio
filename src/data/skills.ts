@@ -22,12 +22,12 @@ export const skills: Skill[] = [
   { name: "React Query", level: 70, category: "State Management" },
 
   // Database
-  { name: "Firebase", level: 85, category: "Database" },
+  { name: "Firebase", level: 65, category: "Database" },
 
   // Tools
-  { name: "Git", level: 80, category: "Tools" },
-  { name: "GitHub", level: 90, category: "Tools" },
-  { name: "Postman", level: 85, category: "Tools" },
-  { name: "Figma", level: 80, category: "Tools" },
+  { name: "Git", level: 70, category: "Tools" },
+  { name: "GitHub", level: 70, category: "Tools" },
+  { name: "Postman", level: 75, category: "Tools" },
+  { name: "Figma", level: 50, category: "Tools" },
   { name: "VS Code", level: 95, category: "Tools" },
 ];
