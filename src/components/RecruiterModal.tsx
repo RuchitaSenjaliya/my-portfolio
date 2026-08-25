@@ -13,7 +13,7 @@ import {
   X,
   Sparkles,
 } from "lucide-react";
-import { downloadFileFromUrl } from "@/utils/helper";
+import { downloadFileFromUrl, handleDownloadCV } from "@/utils/helper";
 import { ownerInfo } from "@/data/contact";
 
 export default function RecruiterModal() {
@@ -24,10 +24,6 @@ export default function RecruiterModal() {
     navigator.clipboard.writeText(ownerInfo.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleDownloadCV = () => {
-    downloadFileFromUrl("/Ruchi-Resume.pdf", "Ruchi-Resume.pdf");
   };
 
   return (

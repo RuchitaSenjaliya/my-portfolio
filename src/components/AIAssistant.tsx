@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Sparkles, User, Bot, Loader2 } from "lucide-react";
 
-import { downloadFileFromUrl } from "@/utils/helper";
+import { downloadFileFromUrl, handleDownloadCV } from "@/utils/helper";
 import { ownerInfo } from "@/data/contact";
 import { projects } from "@/data/projects";
 import { skills } from "@/data/skills";
@@ -28,22 +28,15 @@ const projectListFormatted = projects
   .join("\n");
 
 const knowledgeBase: Record<string, string> = {
-  default:
-    `I'm ${ownerInfo.name}'s AI Assistant! Ask me anything about her skills, experience, or projects. You can try clicking the suggestions below.`,
+  default: `I'm ${ownerInfo.name}'s AI Assistant! Ask me anything about her skills, experience, or projects. You can try clicking the suggestions below.`,
   tech: `${ownerInfo.name} is a ${ownerInfo.role} with ${ownerInfo.experience} of experience. Her core stack includes ${topSkillsList}.`,
-  experience:
-    `${ownerInfo.name} has been working as a ${ownerInfo.role} since 2023. She has built scalable web apps with React, hybrid/native mobile apps with React Native, and maintained enterprise projects with Angular and Ionic.`,
-  agrosmart:
-    `AgroSmart is a React Native app built by ${ownerInfo.name}. It integrates Firebase, Redux Toolkit, and the WhatsApp API, allowing farmers to list products, receive push notifications, check pricing alerts, and chat directly with buyers.`,
-  reactnative:
-    `${ownerInfo.name}'s React Native projects include AgroSmart (a smart agritech platform with Firebase) and other hybrid applications. She has extensive experience with Expo, state management, and push notification configurations.`,
-  projects:
-    `${ownerInfo.name}'s major projects are:\n${projectListFormatted}`,
-  resume:
-    `You can download ${ownerInfo.name}'s resume right from this chat! [Click here to download Resume](action:download)`,
+  experience: `${ownerInfo.name} has been working as a ${ownerInfo.role} since 2023. She has built scalable web apps with React, hybrid/native mobile apps with React Native, and maintained enterprise projects with Angular and Ionic.`,
+  agrosmart: `AgroSmart is a React Native app built by ${ownerInfo.name}. It integrates Firebase, Redux Toolkit, and the WhatsApp API, allowing farmers to list products, receive push notifications, check pricing alerts, and chat directly with buyers.`,
+  reactnative: `${ownerInfo.name}'s React Native projects include AgroSmart (a smart agritech platform with Firebase) and other hybrid applications. She has extensive experience with Expo, state management, and push notification configurations.`,
+  projects: `${ownerInfo.name}'s major projects are:\n${projectListFormatted}`,
+  resume: `You can download ${ownerInfo.name}'s resume right from this chat! [Click here to download Resume](action:download)`,
   art: `Yes, besides coding, ${ownerInfo.name} is a passionate artist! She creates beautiful Mandala Art and Canvas Paintings. Switch to 'Canvas Mode' at the top of the navbar to explore her art gallery!`,
-  contact:
-    `You can reach ${ownerInfo.name} via email at ${ownerInfo.email}, find her on LinkedIn (${ownerInfo.linkedin.link}), or GitHub (${ownerInfo.git.link}).`,
+  contact: `You can reach ${ownerInfo.name} via email at ${ownerInfo.email}, find her on LinkedIn (${ownerInfo.linkedin.link}), or GitHub (${ownerInfo.git.link}).`,
 };
 
 interface AIAssistantProps {
@@ -67,10 +60,6 @@ export default function AIAssistant({ isOpen, setIsOpen }: AIAssistantProps) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, isTyping]);
-
-  const handleDownloadCV = () => {
-    downloadFileFromUrl("/Ruchi-Resume.pdf", "Ruchi-Resume.pdf");
-  };
 
   const getResponse = (query: string): string => {
     const q = query.toLowerCase();

@@ -11,8 +11,9 @@ import {
   Loader2,
   CheckCircle2,
   AlertCircle,
+  Check,
 } from "lucide-react";
-import { contactDetails } from "@/data/contact";
+import { contactDetails, ownerInfo } from "@/data/contact";
 
 interface FormState {
   name: string;
@@ -44,6 +45,7 @@ export default function Contact() {
     "idle" | "sending" | "success" | "error"
   >("idle");
   const [apiError, setApiError] = useState<string | null>(null);
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   const validate = (): boolean => {
     const tempErrors: FormErrors = {};
@@ -149,24 +151,43 @@ export default function Contact() {
           <div className="lg:col-span-5 space-y-6 flex flex-col justify-center">
             {contactDetails.map((detail, idx) => {
               const Icon = detail.icon;
+              const isMail = detail.label === "Email";
               return (
                 <motion.a
                   key={detail.label}
                   href={detail.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={isMail ? undefined : "_blank"}
+                  rel={isMail ? undefined : "noopener noreferrer"}
+                  onClick={
+                    isMail
+                      ? () => {
+                          if (typeof navigator !== "undefined" && navigator.clipboard) {
+                            navigator.clipboard.writeText(ownerInfo.email);
+                            setCopiedEmail(true);
+                            setTimeout(() => setCopiedEmail(false), 2500);
+                          }
+                        }
+                      : undefined
+                  }
                   initial={{ opacity: 0, x: -30 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="flex items-center gap-5 p-5 rounded-2xl bg-card-bg border border-card-border hover:border-primary/30 hover:shadow-md transition-all duration-300 group cursor-pointer"
+                  className="flex items-center gap-5 p-5 rounded-2xl bg-card-bg border border-card-border hover:border-primary/30 hover:shadow-md transition-all duration-300 group cursor-pointer relative overflow-hidden"
                 >
                   <div className="p-3.5 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-foreground/50">
-                      {detail.label}
-                    </h3>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="text-xs font-bold uppercase tracking-wider text-foreground/50">
+                        {detail.label}
+                      </h3>
+                      {isMail && copiedEmail && (
+                        <span className="text-[10px] font-semibold text-green-500 bg-green-500/10 px-2 py-0.5 rounded-full flex items-center gap-1">
+                          <Check className="w-3 h-3" /> Copied!
+                        </span>
+                      )}
+                    </div>
                     <p className="text-sm font-semibold text-foreground/80 mt-1 break-all">
                       {detail.value}
                     </p>

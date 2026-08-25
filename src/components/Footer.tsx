@@ -66,18 +66,27 @@ export default function Footer() {
 
           {/* Social icons */}
           <div className="flex justify-center md:justify-end items-center gap-5">
-            {socialLinks.map(({ Icon, href, label }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="p-2.5 rounded-full bg-background border border-card-border/60 hover:border-primary/40 hover:text-primary hover:shadow-sm transition-all duration-300 cursor-pointer"
-              >
-                <Icon className="w-4 h-4" />
-              </a>
-            ))}
+            {socialLinks.map(({ Icon, href, label }) => {
+              const isMail = label === 'Email';
+              return (
+                <a
+                  key={label}
+                  href={isMail ? '#contact' : href}
+                  target={isMail ? undefined : '_blank'}
+                  rel={isMail ? undefined : 'noopener noreferrer'}
+                  aria-label={label}
+                  onClick={(e) => {
+                    if (isMail) {
+                      e.preventDefault();
+                      smoothScrollToElement('contact', 80);
+                    }
+                  }}
+                  className="p-2.5 rounded-full bg-background border border-card-border/60 hover:border-primary/40 hover:text-primary hover:shadow-sm transition-all duration-300 cursor-pointer"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              );
+            })}
           </div>
 
         </div>

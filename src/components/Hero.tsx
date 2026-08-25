@@ -17,7 +17,7 @@ import {
   codeHeroIcons,
   DEV_WORDS,
 } from "@/data/heroIcons";
-import { downloadFileFromUrl } from "@/utils/helper";
+import { downloadFileFromUrl, handleDownloadCV, smoothScrollToElement } from "@/utils/helper";
 import { ownerInfo, socialLinks } from "@/data/contact";
 import { skills } from "@/data/skills";
 
@@ -201,10 +201,6 @@ export default function Hero({
     }
   };
 
-  const handleDownloadCV = () => {
-    downloadFileFromUrl("/Ruchi-Resume.pdf", "Ruchi-Resume.pdf");
-  };
-
   return (
     <section
       id="home"
@@ -349,20 +345,29 @@ export default function Hero({
               transition={{ duration: 0.8, delay: 0.6 }}
               className="flex items-center gap-4 mt-12"
             >
-              {socialLinks.map(({ Icon, href, label }) => (
-                <motion.a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="p-2.5 rounded-full bg-card-bg border border-card-border hover:border-primary/45 hover:text-primary hover:shadow-md transition-all duration-300"
-                  whileHover={{ scale: 1.1, y: -3 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Icon className="w-4.5 h-4.5" />
-                </motion.a>
-              ))}
+              {socialLinks.map(({ Icon, href, label }) => {
+                const isMail = label === "Email";
+                return (
+                  <motion.a
+                    key={label}
+                    href={isMail ? "#contact" : href}
+                    target={isMail ? undefined : "_blank"}
+                    rel={isMail ? undefined : "noopener noreferrer"}
+                    aria-label={label}
+                    onClick={(e) => {
+                      if (isMail) {
+                        e.preventDefault();
+                        smoothScrollToElement("contact", 80);
+                      }
+                    }}
+                    className="p-2.5 rounded-full bg-card-bg border border-card-border hover:border-primary/45 hover:text-primary hover:shadow-md transition-all duration-300 cursor-pointer"
+                    whileHover={{ scale: 1.1, y: -3 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Icon className="w-4.5 h-4.5" />
+                  </motion.a>
+                );
+              })}
             </motion.div>
           </div>
 
